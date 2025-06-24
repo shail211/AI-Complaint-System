@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Complaint Analytics</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    .charts-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .chart-container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      min-width: 220px;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 300px;
+      height: auto;
+    }
+    #statusChart, #categoryChart {
+      max-width: 100%;
+      height: 260px !important;
+    }
+    @media (max-width: 900px) {
+      .charts-grid { flex-direction: column; align-items: stretch; }
+      .chart-container { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Seal_of_Sikkim_greyscale.png" alt="Sikkim Logo" class="logo" />
+                <div class="logo-title">Admin Panel</div>
+                <div class="logo-subtitle">Complaint Management</div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="admin-dashboard.html" class="nav-link active">
+                            <span class="nav-icon">📊</span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="All-Complaints.html" class="nav-link">
+                            <span class="nav-icon">📋</span>
+                            All Complaints
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pending.html" class="nav-link">
+                            <span class="nav-icon">⏳</span>
+                            Pending
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="inprogress.html" class="nav-link">
+                            <span class="nav-icon">🔄</span>
+                            In Progress
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="resolved.html" class="nav-link">
+                            <span class="nav-icon">✅</span>
+                            Resolved
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="analytics.html" class="nav-link">
+                            <span class="nav-icon">📈</span>
+                            Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin-profile.html" class="nav-link">
+                            <span class="nav-icon">👤</span>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="dashboard_final.html" class="nav-link">
+                            <span class="nav-icon">🏠</span>
+                            Public Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h2>Complaint Analytics</h2>
+        <div class="user-info">
+          <div class="user-avatar">GA</div>
+        </div>
+      </div>
+
+      <section class="complaints-section">
+        <div class="section-header">
+          <h3 class="section-title">Overview</h3>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+          <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    let statusChart, categoryChart;
+
+    function countByCategory(complaints) {
+      const counts = {};
+      complaints.forEach(c => {
+        const cat = (c.category || c.department || 'General').trim();
+        counts[cat] = (counts[cat] || 0) + 1;
+      });
+      return counts;
+    }
+
+    function fetchAndRenderCharts() {
+      fetch('http://localhost:8000/api/complaints/')
+        .then(res => res.json())
+        .then(data => {
+          const complaints = data.complaints || [];
+          // Status counts
+          const pending = complaints.filter(c =>
+            ['pending', 'pending_review', 'under_review'].includes((c.status || '').toLowerCase())
+          ).length;
+          const inProgress = complaints.filter(c =>
+            ['in_progress', 'in progress'].includes((c.status || '').toLowerCase())
+          ).length;
+          const resolved = complaints.filter(c =>
+            (c.status || '').toLowerCase() === 'resolved'
+          ).length;
+
+          // Pie/Donut Chart for Status
+          if (statusChart) statusChart.destroy();
+          statusChart = new Chart(document.getElementById('statusChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+              labels: ['Pending', 'In Progress', 'Resolved'],
+              datasets: [{
+                label: 'Complaint Status',
+                data: [pending, inProgress, resolved],
+                backgroundColor: ['#ffbb33', '#33b5e5', '#00C851'],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: '65%',
+              plugins: {
+                legend: { position: 'bottom' }
+              }
+            }
+          });
+
+          // Bar Chart for Category
+          const catCounts = countByCategory(complaints);
+          const catLabels = Object.keys(catCounts);
+          const catData = Object.values(catCounts);
+
+          if (categoryChart) categoryChart.destroy();
+          categoryChart = new Chart(document.getElementById('categoryChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+              labels: catLabels,
+              datasets: [{
+                label: 'Complaints by Category',
+                data: catData,
+                backgroundColor: '#4285F4'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              indexAxis: 'y',
+              plugins: {
+                legend: { display: false }
+              },
+              scales: {
+                x: { beginAtZero: true },
+                y: {
+                  ticks: {
+                    autoSkip: false,
+                    maxRotation: 0,
+                    minRotation: 0,
+                    font: { size: 13 }
+                  }
+                }
+              }
+            }
+          });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchAndRenderCharts);
+  </script>
+</body>
+</html>

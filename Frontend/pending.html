@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pending Complaints</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Seal_of_Sikkim_greyscale.png" alt="Sikkim Logo" class="logo" />
+                <div class="logo-title">Admin Panel</div>
+                <div class="logo-subtitle">Complaint Management</div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="admin-dashboard.html" class="nav-link active">
+                            <span class="nav-icon">📊</span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="All-Complaints.html" class="nav-link">
+                            <span class="nav-icon">📋</span>
+                            All Complaints
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pending.html" class="nav-link">
+                            <span class="nav-icon">⏳</span>
+                            Pending
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="inprogress.html" class="nav-link">
+                            <span class="nav-icon">🔄</span>
+                            In Progress
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="resolved.html" class="nav-link">
+                            <span class="nav-icon">✅</span>
+                            Resolved
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="analytics.html" class="nav-link">
+                            <span class="nav-icon">📈</span>
+                            Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin-profile.html" class="nav-link">
+                            <span class="nav-icon">👤</span>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="dashboard_final.html" class="nav-link">
+                            <span class="nav-icon">🏠</span>
+                            Public Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h2>Pending Complaints</h2>
+        <div class="user-info">
+          <div class="user-avatar">GA</div>
+        </div>
+      </div>
+      <section class="complaints-section">
+        <div class="section-header">
+          <h3 class="section-title">Complaints</h3>
+        </div>
+        <div id="complaints-list"></div>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const list = document.getElementById('complaints-list');
+      list.innerHTML = '<div class="loading">Loading complaints...</div>';
+      fetch('http://localhost:8000/api/complaints/')
+        .then(res => res.json())
+        .then(data => {
+          const complaints = (data.complaints || []).filter(
+            c => ['pending', 'pending_review', 'under_review'].includes((c.status || '').toLowerCase())
+          );
+          if (!complaints.length) {
+            list.innerHTML = '<div class="loading">No pending complaints.</div>';
+            return;
+          }
+          list.innerHTML = '';
+          complaints.forEach(c => {
+            list.innerHTML += `
+              <div class="complaint-item pending">
+                <div class="complaint-header">
+                  <span class="complaint-id">#${c._id}</span>
+                  <span class="complaint-status status-pending">${c.status}</span>
+                </div>
+                <p class="complaint-content">${c.complaint_query || ''}</p>
+                <div class="complaint-meta">
+                  <div class="meta-item"><i class="fas fa-calendar-alt"></i> ${c.date || ''}</div>
+                  <div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${c.category || c.department || ''}</div>
+                </div>
+                <div class="complaint-actions">
+                  <a href="complaint-detail.html?id=${c._id}" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            `;
+          });
+        })
+        .catch(() => {
+          list.innerHTML = '<div class="loading">Failed to load complaints.</div>';
+        });
+    });
+  </script>
+</body>
+</html>

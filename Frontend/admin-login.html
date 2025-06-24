@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Admin Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header h1 {
+            color: #333;
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:hover {
+            border-color: #c1c9d2;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+            user-select: none;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            accent-color: #1e3c72;
+        }
+
+        .forgot-link {
+            color: #1e3c72;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-link:hover {
+            color: #2a5298;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 60, 114, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
+
+        .success-message {
+            color: #27ae60;
+            font-size: 0.9em;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .success-message.show {
+            opacity: 1;
+        }
+
+        .security-info {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .security-info p {
+            color: #888;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .security-icon {
+            font-size: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+            
+            .login-header h1 {
+                font-size: 2em;
+            }
+        }
+
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .gov-badge {
+            display: inline-block;
+            background-color: #1e3c72;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Government Admin Portal</h1>
+            <p>Sign in with your government credentials</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Government Email <span class="gov-badge">@gov.in</span></label>
+                <input type="email" id="email" name="email" required autocomplete="username" placeholder="username@gov.in">
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+                <span class="password-toggle" onclick="togglePassword()">👁️</span>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="#" class="forgot-link" onclick="showForgotPassword()">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                Sign In
+                <span class="loading" id="loading"></span>
+            </button>
+
+            <div class="success-message" id="successMessage"></div>
+            <div class="error-message" id="generalError"></div>
+        </form>
+
+        <div class="security-info">
+            <p>
+                <span class="security-icon">🔒</span>
+                Secure government authentication portal
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let loginAttempts = 0;
+        const maxAttempts = 3;
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+
+        function showMessage(elementId, message, isError = true) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.add('show');
+            
+            setTimeout(() => {
+                element.classList.remove('show');
+            }, 5000);
+        }
+
+        function validateForm() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+
+            // Email validation - must be @gov.in
+            if (!email) {
+                showMessage('emailError', 'Government email is required');
+                isValid = false;
+            } else if (!email.endsWith('@gov.in')) {
+                showMessage('emailError', 'Only @gov.in email addresses are allowed');
+                isValid = false;
+            } else if (!/^[a-zA-Z0-9._-]+@gov\.in$/.test(email)) {
+                showMessage('emailError', 'Please enter a valid government email');
+                isValid = false;
+            }
+
+            // Password validation
+            if (!password) {
+                showMessage('passwordError', 'Password is required');
+                isValid = false;
+            } else if (password.length < 8) {
+                showMessage('passwordError', 'Password must be at least 8 characters');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function simulateLogin(email, password) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Demo credentials - in real app, this would be server-side validation
+                    if ((email === 'admin@gov.in' && password === 'GovAdmin@123') || 
+                        (email === 'administrator@gov.in' && password === 'Secure@456')) {
+                        resolve({ success: true });
+                    } else {
+                        resolve({ success: false, message: 'Invalid government credentials' });
+                    }
+                }, 2000);
+            });
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (loginAttempts >= maxAttempts) {
+                showMessage('generalError', 'Too many failed attempts. Your account has been temporarily locked.');
+                return;
+            }
+
+            if (!validateForm()) {
+                return;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loading = document.getElementById('loading');
+
+            // Show loading state
+            loginBtn.disabled = true;
+            loading.style.display = 'inline-block';
+            loginBtn.innerHTML = 'Authenticating... <span class="loading" style="display: inline-block;"></span>';
+
+            try {
+                const result = await simulateLogin(email, password);
+                
+                if (result.success) {
+                    showMessage('successMessage', '✅ Authentication successful! Redirecting...', false);
+                    document.getElementById('successMessage').style.color = '#27ae60';
+                    
+                    // Simulate redirect after successful login
+                    setTimeout(() => {
+                        alert('Authentication successful! You would be redirected to the government admin dashboard.');
+                         window.location.href = 'admin-dashboard.html';
+                    }, 1500);
+                } else {
+                    loginAttempts++;
+                    showMessage('generalError', result.message);
+                    
+                    if (loginAttempts >= maxAttempts) {
+                        showMessage('generalError', 'Account temporarily locked due to multiple failed attempts. Contact system administrator.');
+                    }
+                }
+            } catch (error) {
+                showMessage('generalError', 'An error occurred. Please try again.');
+            } finally {
+                // Reset button state
+                loginBtn.disabled = false;
+                loading.style.display = 'none';
+                loginBtn.innerHTML = 'Sign In';
+            }
+        });
+
+        function showForgotPassword() {
+            alert('Government password reset must be requested through your department administrator.\n\nFor demo purposes:\n- Email: admin@gov.in, Password: GovAdmin@123\n- Email: administrator@gov.in, Password: Secure@456');
+        }
+
+        // Add some interactive feedback
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

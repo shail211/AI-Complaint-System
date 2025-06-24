@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complaint Details</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        .container { max-width: 600px; margin: 3rem auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem; }
+        .complaint-id { color: #64748b; font-family: 'Courier New', monospace; background: #f1f5f9; padding: 0.25rem 0.5rem; border-radius: 4px; }
+        .complaint-status { font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; margin-left: 1rem; }
+        .status-pending { background: #fed7d7; color: #c53030; }
+        .status-progress { background: #bee3f8; color: #2b6cb0; }
+        .status-resolved { background: #c6f6d5; color: #2f855a; }
+        .status-rejected { background: #fbb6ce; color: #97266d; }
+        .meta { color: #64748b; margin-bottom: 1rem; }
+        .btn { padding: 0.5rem 1rem; border: none; border-radius: 8px; background: #667eea; color: #fff; cursor: pointer; text-decoration: none; }
+        .btn:hover { background: #5a67d8; }
+        .detail-block { margin-bottom: 1.1rem; border-left: 3px solid #e5e7eb; background: #f9fafb; padding: 0.7rem 1rem; }
+        .detail-block strong { color: #2d3748; font-weight: 600; margin-right: 0.5em; }
+        ul.suggested-actions { margin: 0.3em 0 0.3em 1.2em; padding: 0; font-size: 1rem; }
+        ul.suggested-actions li { margin-bottom: 0.2em; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="container" id="complaint-detail">
+        Loading...
+    </div>
+    <script>
+        function getQueryParam(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+        const id = getQueryParam('id');
+        const detailDiv = document.getElementById('complaint-detail');
+        fetch(`http://localhost:8000/api/complaints/${id}/`)
+            .then(res => res.json())
+            .then(c => {
+                let statusClass = '';
+                if (c.status === 'pending_review' || c.status === 'Pending') statusClass = 'status-pending';
+                else if (c.status === 'in_progress' || c.status === 'In Progress') statusClass = 'status-progress';
+                else if (c.status === 'resolved' || c.status === 'Resolved') statusClass = 'status-resolved';
+                else if (c.status === 'rejected' || c.status === 'Rejected') statusClass = 'status-rejected';
+
+                // AI analysis details
+                let aiAnalysisHtml = '';
+                if (c.ai_analysis) {
+                    aiAnalysisHtml = `
+                        <div class="detail-block"><strong>AI Sentiment:</strong> ${c.ai_analysis.sentiment || ''}</div>
+                        <div class="detail-block"><strong>Urgency Level:</strong> ${c.ai_analysis.urgency_level || ''}</div>
+                        <div class="detail-block"><strong>AI Category:</strong> ${c.ai_analysis.category || ''}</div>
+                        <div class="detail-block"><strong>Summary:</strong> ${c.ai_analysis.summary || ''}</div>
+                        <div class="detail-block"><strong>Suggested Actions:</strong>
+                            <ul class="suggested-actions">
+                                ${(c.ai_analysis.suggested_actions || []).map(action => `<li>${action}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                detailDiv.innerHTML = `
+                    <h2>Complaint Details</h2>
+                    <div class="meta">
+                        <span class="complaint-id">#${c._id}</span>
+                        <span class="complaint-status ${statusClass}">${c.status}</span>
+                    </div>
+                    <div class="detail-block"><strong>Date:</strong> ${c.date || ''}</div>
+                    <div class="detail-block"><strong>Time:</strong> ${c.time || ''}</div>
+                    <div class="detail-block"><strong>Name:</strong> ${c.profile_name || ''}</div>
+                    <div class="detail-block"><strong>Category:</strong> ${(c.category || c.department || '')}</div>
+                    <div class="detail-block"><strong>Description:</strong> ${c.complaint_query || ''}</div>
+                    <div class="detail-block"><strong>Status:</strong> ${c.status || ''}</div>
+                    <div class="detail-block"><strong>Priority Score:</strong> ${c.priority_score || ''}</div>
+                    <div class="detail-block"><strong>Department:</strong> ${c.department || ''}</div>
+                    <div class="detail-block"><strong>Recommended Officer:</strong> ${c.recommended_officer || ''}</div>
+                    ${aiAnalysisHtml}
+                    <br>
+                    <a href="All-Complaints.html" class="btn">Back to All Complaints</a>
+                `;
+            })
+            .catch(() => {
+                detailDiv.innerHTML = 'Failed to load complaint details.';
+            });
+    </script>
+</body>

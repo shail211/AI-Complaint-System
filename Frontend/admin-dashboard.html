@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sikkim Complaint Portal - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* Modal content styling for Swiss/International Typographic Style */
+        #complaintModal .modal-content {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            padding: 2rem 2.5rem;
+            max-width: 540px;
+            margin: 3rem auto;
+            color: #222;
+            letter-spacing: 0.01em;
+            position: relative;
+            min-width: 320px;
+        }
+        #complaintModal .modal-header {
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #complaintModal .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: #1a202c;
+        }
+        #complaintModal .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #aaa;
+            cursor: pointer;
+        }
+        #modalBody {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        #modalBody > div {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            border-left: 3px solid #e5e7eb;
+            padding-left: 0.75rem;
+            margin-bottom: 0.1rem;
+            background: #f9fafb;
+        }
+        #modalBody strong {
+            color: #2d3748;
+            font-weight: 600;
+            margin-right: 0.5em;
+            font-family: inherit;
+        }
+        #modalBody ul {
+            margin: 0.3em 0 0.3em 1.2em;
+            padding: 0;
+            font-size: 1rem;
+        }
+        #modalBody li {
+            margin-bottom: 0.2em;
+            line-height: 1.5;
+        }
+        @media (max-width: 600px) {
+            #complaintModal .modal-content {
+                padding: 1rem 0.5rem;
+                max-width: 98vw;
+            }
+            #modalBody > div {
+                font-size: 0.98rem;
+                padding-left: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Seal_of_Sikkim_greyscale.png" alt="Sikkim Logo" class="logo" />
+                <div class="logo-title">Admin Panel</div>
+                <div class="logo-subtitle">Complaint Management</div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="admin-dashboard.html" class="nav-link active">
+                            <span class="nav-icon">📊</span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="All-Complaints.html" class="nav-link">
+                            <span class="nav-icon">📋</span>
+                            All Complaints
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pending.html" class="nav-link">
+                            <span class="nav-icon">⏳</span>
+                            Pending
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="inprogress.html" class="nav-link">
+                            <span class="nav-icon">🔄</span>
+                            In Progress
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="resolved.html" class="nav-link">
+                            <span class="nav-icon">✅</span>
+                            Resolved
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="analytics.html" class="nav-link">
+                            <span class="nav-icon">📈</span>
+                            Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin-profile.html" class="nav-link">
+                            <span class="nav-icon">👤</span>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="dashboard_final.html" class="nav-link">
+                            <span class="nav-icon">🏠</span>
+                            Public Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h2>Admin Dashboard</h2>
+                <div class="user-info">
+                    <span>Welcome back, Admin!</span>
+                    <div class="user-avatar">A</div>
+                </div>
+            </header>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Total Complaints</span>
+                        <div class="stat-icon">📋</div>
+                    </div>
+                    <div class="stat-value" id="totalComplaints">0</div>
+                    <div class="stat-change positive">
+                        <span>↗</span> Live updates
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Pending Review</span>
+                        <div class="stat-icon">⏳</div>
+                    </div>
+                    <div class="stat-value" id="pendingComplaints">0</div>
+                    <div class="stat-change" id="pendingChange">
+                        <span>→</span> Needs attention
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">In Progress</span>
+                        <div class="stat-icon">🔄</div>
+                    </div>
+                    <div class="stat-value" id="inProgressComplaints">0</div>
+                    <div class="stat-change positive">
+                        <span>↗</span> Being processed
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Resolved</span>
+                        <div class="stat-icon">✅</div>
+                    </div>
+                    <div class="stat-value" id="resolvedComplaints">0</div>
+                    <div class="stat-change positive">
+                        <span>↗</span> Completed
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Rejected</span>
+                        <div class="stat-icon">❌</div>
+                    </div>
+                    <div class="stat-value" id="rejectedComplaints">0</div>
+                    <div class="stat-change negative">
+                        <span>↓</span> Review required
+                    </div>
+                </div>
+            </div>
+            <div class="complaints-section">
+                <div class="section-header">
+                    <h3 class="section-title">Complaint Management</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="in_progress">In Progress</button>
+                        <button class="filter-btn" data-filter="resolved">Resolved</button>
+                        <button class="filter-btn" data-filter="rejected">Rejected</button>
+                    </div>
+                </div>
+                <div class="loading" id="complaintsLoading">
+                    <div class="spinner"></div>
+                    <p>Loading complaints...</p>
+                </div>
+                <div id="complaintsContainer"></div>
+            </div>
+        </main>
+    </div>
+    <!-- Modal for complaint details -->
+    <div id="complaintModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Complaint Details</h3>
+                <button class="close-btn" onclick="document.getElementById('complaintModal').style.display='none'">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+    <script>
+        let allComplaints = [];
+        let currentFilter = 'all';
+
+        function fetchComplaints() {
+            document.getElementById('complaintsLoading').style.display = '';
+            fetch('http://localhost:8000/api/complaints/')
+                .then(res => res.json())
+                .then(data => {
+                    allComplaints = data.complaints || [];
+                    updateStatistics(data);
+                    displayComplaints();
+                    document.getElementById('complaintsLoading').style.display = 'none';
+                })
+                .catch(() => {
+                    document.getElementById('complaintsLoading').innerHTML = '<p>Failed to load complaints.</p>';
+                });
+        }
+
+        function updateStatistics(data) {
+            document.getElementById('totalComplaints').textContent = data.total_complaints || 0;
+            document.getElementById('pendingComplaints').textContent = data.pending_review || 0;
+            document.getElementById('inProgressComplaints').textContent = data.in_progress || 0;
+            document.getElementById('resolvedComplaints').textContent = data.resolved || 0;
+            document.getElementById('rejectedComplaints').textContent = data.rejected || 0; // NEW
+
+            // Update pending status indicator
+            const pendingChangeEl = document.getElementById('pendingChange');
+            if ((data.pending_review || 0) > 0) {
+                pendingChangeEl.innerHTML = '<span>⚠️</span> Needs attention';
+                pendingChangeEl.className = 'stat-change negative';
+            } else {
+                pendingChangeEl.innerHTML = '<span>✅</span> All clear';
+                pendingChangeEl.className = 'stat-change positive';
+            }
+        }
+
+        function displayComplaints() {
+            const container = document.getElementById('complaintsContainer');
+            let filtered = allComplaints;
+            if (currentFilter !== 'all') {
+                filtered = allComplaints.filter(c => {
+                    if (currentFilter === 'pending') {
+                        return ['pending', 'pending_review', 'under_review'].includes((c.status || '').toLowerCase());
+                    }
+                    if (currentFilter === 'in_progress') {
+                        return ['in_progress', 'in progress'].includes((c.status || '').toLowerCase());
+                    }
+                    if (currentFilter === 'resolved') {
+                        return ['resolved'].includes((c.status || '').toLowerCase());
+                    }
+                    if (currentFilter === 'rejected') {
+                        return ['rejected', 'rejected_complaint'].includes((c.status || '').toLowerCase());
+                    }
+                    return true;
+                });
+            }
+            if (!filtered.length) {
+                container.innerHTML = `<div style="text-align:center;padding:2rem;color:#64748b;">
+                    <div style="font-size:3rem;margin-bottom:1rem;">📭</div>
+                    <h3>No complaints found</h3>
+                    <p>No complaints match the current filter.</p>
+                </div>`;
+                return;
+            }
+            container.innerHTML = '';
+            filtered.forEach(c => {
+                const div = document.createElement('div');
+                let statusClass = '';
+                if ((c.status || '').toLowerCase() === 'pending' || (c.status || '').toLowerCase() === 'pending_review' || (c.status || '').toLowerCase() === 'under_review') statusClass = 'status-pending';
+                else if ((c.status || '').toLowerCase() === 'in_progress' || (c.status || '').toLowerCase() === 'in progress') statusClass = 'status-progress';
+                else if ((c.status || '').toLowerCase() === 'resolved') statusClass = 'status-resolved';
+                else if ((c.status || '').toLowerCase() === 'rejected' || (c.status || '').toLowerCase() === 'rejected_complaint') statusClass = 'status-rejected';
+                div.className = `complaint-item ${statusClass}`;
+                div.innerHTML = `
+                    <div class="complaint-header">
+                        <div class="complaint-id">ID: ${c._id ? c._id.substring(0,8).toUpperCase() : 'N/A'}</div>
+                        <span class="complaint-status ${statusClass}">${c.status || 'N/A'}</span>
+                        <button class="btn btn-primary" onclick="showComplaintModal('${c._id}')">View Details</button>
+                    </div>
+                    <div class="complaint-content">${c.complaint_query || c.description || 'No description provided'}</div>
+                    <div class="complaint-meta">
+                        <span>📂 ${c.category || c.department || 'General'}</span>
+                        <span>👤 ${c.profile_name || c.name || 'Anonymous'}</span>
+                        <span>🕒 ${c.date || ''}</span>
+                    </div>
+                    <div class="complaint-actions">
+                        <select class="status-dropdown" data-id="${c._id}">
+                            <option value="pending_review" ${c.status === 'pending_review' ? 'selected' : ''}>Pending Review</option>
+                            <option value="in_progress" ${c.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="resolved" ${c.status === 'resolved' ? 'selected' : ''}>Resolved</option>
+                            <option value="rejected" ${c.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+                            <option value="under_review" ${c.status === 'under_review' ? 'selected' : ''}>Under Review</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            // Add event listener for all dropdowns after rendering complaints
+            document.querySelectorAll('.status-dropdown').forEach(drop => {
+              drop.addEventListener('change', function() {
+                const complaintId = this.getAttribute('data-id');
+                const newStatus = this.value;
+                fetch(`http://localhost:8000/api/complaints/${complaintId}/update/`, {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ status: newStatus })
+                })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.message) {
+                    alert('Status updated!');
+                    // Optionally, refresh the list or update UI
+                  } else {
+                    alert(data.error || 'Failed to update status.');
+                  }
+                })
+                .catch(() => alert('Failed to update status.'));
+              });
+            });
+        }
+
+        function showComplaintModal(id) {
+            const c = allComplaints.find(x => x._id === id);
+            if (!c) return;
+            let statusClass = '';
+            if ((c.status || '').toLowerCase() === 'pending' || (c.status || '').toLowerCase() === 'pending_review' || (c.status || '').toLowerCase() === 'under_review') statusClass = 'status-pending';
+            else if ((c.status || '').toLowerCase() === 'in_progress' || (c.status || '').toLowerCase() === 'in progress') statusClass = 'status-progress';
+            else if ((c.status || '').toLowerCase() === 'resolved') statusClass = 'status-resolved';
+            else if ((c.status || '').toLowerCase() === 'rejected' || (c.status || '').toLowerCase() === 'rejected_complaint') statusClass = 'status-rejected';
+
+            // Prepare AI analysis details
+            let aiAnalysisHtml = '';
+            if (c.ai_analysis) {
+                aiAnalysisHtml = `
+                    <div><strong>AI Sentiment:</strong> ${c.ai_analysis.sentiment || ''}</div>
+                    <div><strong>Urgency Level:</strong> ${c.ai_analysis.urgency_level || ''}</div>
+                    <div><strong>AI Category:</strong> ${c.ai_analysis.category || ''}</div>
+                    <div><strong>Summary:</strong> ${c.ai_analysis.summary || ''}</div>
+                    <div><strong>Suggested Actions:</strong>
+                        <ul>
+                            ${(c.ai_analysis.suggested_actions || []).map(action => `<li>${action}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalBody').innerHTML = `
+                <div><strong>ID:</strong> ${c._id}</div>
+                <div><strong>Name:</strong> ${c.profile_name || c.name || 'Anonymous'}</div>
+                <div><strong>Complaint:</strong> ${c.complaint_query || c.description || ''}</div>
+                <div><strong>Category:</strong> ${c.category || c.department || 'General'}</div>
+                <div><strong>Status:</strong> <span class="${statusClass}">${c.status}</span></div>
+                <div><strong>Time:</strong> ${c.time || ''}</div>
+                <div><strong>Date:</strong> ${c.date || ''}</div>
+                <div><strong>Priority Score:</strong> ${c.priority_score || ''}</div>
+                <div><strong>Department:</strong> ${c.department || ''}</div>
+                <div><strong>Recommended Officer:</strong> ${c.recommended_officer || ''}</div>
+                ${aiAnalysisHtml}
+            `;
+            document.getElementById('complaintModal').style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchComplaints();
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    displayComplaints();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

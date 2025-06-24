@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Complaints</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        .main-content { max-width: 1100px; margin: 2rem auto; }
+        .complaints-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .complaint-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 1.5rem; width: 320px; }
+        .complaint-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .complaint-id { color: #64748b; font-family: 'Courier New', monospace; }
+        .complaint-status { font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; }
+        .status-pending { background: #fed7d7; color: #c53030; }
+        .status-progress { background: #bee3f8; color: #2b6cb0; }
+        .status-resolved { background: #c6f6d5; color: #2f855a; }
+        .complaint-title { margin: 0.5rem 0; }
+        .complaint-meta { display: flex; justify-content: space-between; align-items: center; }
+        .complaint-category { color: #64748b; font-size: 0.95em; }
+        .btn { padding: 0.4rem 1rem; border: none; border-radius: 8px; background: #667eea; color: #fff; cursor: pointer; text-decoration: none; }
+        .btn:hover { background: #5a67d8; }
+        .loading { color: #64748b; margin: 2rem; }
+        .status-dropdown { margin-top: 0.5rem; padding: 0.3rem; border: 1px solid #cbd5e0; border-radius: 8px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>All Complaints</h1>
+        <div class="complaints-grid" id="complaints-grid"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('complaints-grid');
+            grid.innerHTML = '<div class="loading">Loading complaints...</div>';
+            fetch('http://localhost:8000/api/complaints/')
+                .then(res => res.json())
+                .then(data => {
+                    const complaints = data.complaints || [];
+                    if (!complaints.length) {
+                        grid.innerHTML = '<div class="loading">No complaints found.</div>';
+                        return;
+                    }
+                    grid.innerHTML = '';
+                    complaints.forEach(c => {
+                        let statusClass = '';
+                        if (c.status === 'pending_review' || c.status === 'Pending') statusClass = 'status-pending';
+                        else if (c.status === 'in_progress' || c.status === 'In Progress') statusClass = 'status-progress';
+                        else if (c.status === 'resolved' || c.status === 'Resolved') statusClass = 'status-resolved';
+                        grid.innerHTML += `
+                            <div class="complaint-card">
+                                <div class="complaint-header">
+                                    <span class="complaint-id">#${c._id}</span>
+                                    <span class="complaint-status ${statusClass}">${c.status}</span>
+                                </div>
+                                <h3 class="complaint-title">${c.complaint_query || ''}</h3>
+                                <div class="complaint-meta">
+                                    <span class="complaint-category">${c.category || c.department || ''}</span>
+                                    <a class="btn" href="complaint-detail.html?id=${c._id}">View Details</a>
+                                </div>
+                                <div class="complaint-actions">
+                                    <select class="status-dropdown" data-id="${c._id}">
+                                        <option value="Pending" ${c.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                        <option value="In Progress" ${c.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                                        <option value="Resolved" ${c.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+                                        <option value="Rejected" ${c.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+                                    </select>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    // Add event listener for all dropdowns after rendering complaints
+                    document.querySelectorAll('.status-dropdown').forEach(drop => {
+                      drop.addEventListener('change', function() {
+                        const complaintId = this.getAttribute('data-id');
+                        const newStatus = this.value;
+                        fetch(`http://localhost:8000/api/complaints/${complaintId}/update/`, {
+                          method: 'PATCH',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ status: newStatus })
+                        })
+                        .then(res => res.json())
+                        .then(() => {
+                          alert('Status updated!');
+                          // Optionally, refresh the list or update UI
+                        })
+                        .catch(() => alert('Failed to update status.'));
+                      });
+                    });
+                })
+                .catch(() => {
+                    grid.innerHTML = '<div class="loading">Failed to load complaints.</div>';
+                });
+        });
+    </script>
+</body>
+</html>

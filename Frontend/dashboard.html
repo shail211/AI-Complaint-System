@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Complaint Monitoring Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+            padding-top: 100px;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: #f1f5f9;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .notification-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-badge {
+            background: #1e40af;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            background: #475569;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #334155;
+        }
+
+        .btn-primary {
+            background: #1e40af;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .stat-icon.blue { background: #dbeafe; color: #1e40af; }
+        .stat-icon.red { background: #fee2e2; color: #dc2626; }
+        .stat-icon.yellow { background: #fef3c7; color: #d97706; }
+        .stat-icon.green { background: #dcfce7; color: #16a34a; }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Controls */
+        .controls-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .controls-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .filter-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #1e40af;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #16a34a;
+            font-weight: 500;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #16a34a;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        /* Complaints */
+        .complaint {
+            border: 1px solid #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .complaint:hover {
+            border-color: #e2e8f0;
+        }
+
+        .complaint.pending {
+            border-left: 4px solid #d97706;
+            background: #fffbeb;
+        }
+
+        .complaint.resolved {
+            border-left: 4px solid #16a34a;
+            background: #f0fdf4;
+        }
+
+        .complaint.in-progress {
+            border-left: 4px solid #1e40af;
+            background: #eff6ff;
+        }
+
+        .complaint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .complaint-id {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-family: monospace;
+        }
+
+        .complaint-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-resolved { background: #dcfce7; color: #166534; }
+        .status-in-progress { background: #dbeafe; color: #1e40af; }
+
+        .complaint-time {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .complaint-content {
+            color: #374151;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .complaint-meta {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .meta-info {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .complaint-author {
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .location-info {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #f1f5f9;
+            border-top: 2px solid #1e40af;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Seal_of_Sikkim_greyscale.png" alt="Sikkim Logo" class="logo" />
+                <div>
+                    <div class="header-title">Complaint Monitoring System</div>
+                    <div class="header-subtitle">Government of Sikkim</div>
+                </div>
+            </div>
+            <div class="user-info">
+                <button class="notification-btn" onclick="toggleNotifications()">
+                    🔔
+                    <span class="notification-badge" id="notificationCount">0</span>
+                </button>
+                <div class="user-badge">
+                    <span id="currentUser">Administrator</span>
+                </div>
+                <button class="btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-title">Dashboard Overview</div>
+        <div class="page-subtitle">Real-time monitoring of citizen complaints and feedback</div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">📋</div>
+                </div>
+                <div class="stat-number" id="totalComplaints">0</div>
+                <div class="stat-label">Total Complaints</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon yellow">⏳</div>
+                </div>
+                <div class="stat-number" id="pendingComplaints">0</div>
+                <div class="stat-label">Pending Complaints</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">🔄</div>
+                </div>
+                <div class="stat-number" id="inProgressComplaints">0</div>
+                <div class="stat-label">In Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">✅</div>
+                </div>
+                <div class="stat-number" id="resolvedComplaints">0</div>
+                <div class="stat-label">Resolved Complaints</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-section">
+            <div class="controls-header">Filter and Controls</div>
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                    <select class="filter-select" id="statusFilter" onchange="filterComplaints()">
+                        <option value="">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-select" id="categoryFilter" onchange="filterComplaints()">
+                        <option value="">All Categories</option>
+                        <option value="General">General</option>
+                        <option value="Infrastructure">Infrastructure</option>
+                        <option value="Public Services">Public Services</option>
+                        <option value="Environment">Environment</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Time Period</label>
+                    <select class="filter-select" id="timeFilter" onchange="filterComplaints()">
+                        <option value="">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <div class="content-card">
+                <div class="card-header">
+                    <div class="card-title">Live Complaints Feed</div>
+                    <div class="live-indicator">
+                        <div class="live-dot"></div>
+                        Live Monitoring
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="loading" id="feedLoading">
+                        <div class="spinner"></div>
+                        <p>Loading complaints...</p>
+                    </div>
+                    <div id="complaintsFeed"></div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <div class="card-title">Recent Activity</div>
+                    <div id="newCount">0 New</div>
+                </div>
+                <div class="card-content">
+                    <div id="recentActivity"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCqNDsCCmQ32RqJduAytKhoOHlepw2WA1s",
+            authDomain: "final-ai-project-2ec51.firebaseapp.com",
+            projectId: "final-ai-project-2ec51",
+            storageBucket: "final-ai-project-2ec51.appspot.com",
+            messagingSenderId: "788557714998",
+            appId: "1:788557714998:web:60653b6d866a6903402a97"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let allComplaints = [];
+        let filteredComplaints = [];
+
+        function initDashboard() {
+            const complaintsRef = ref(database, 'complaints');
+            
+            onValue(complaintsRef, (snapshot) => {
+                const data = snapshot.val();
+                allComplaints = [];
+
+                if (data) {
+                    for (let id in data) {
+                        allComplaints.push({
+                            id,
+                            ...data[id]
+                        });
+                    }
+                    
+                    // Sort by creation time (newest first)
+                    allComplaints.sort((a, b) => new Date(b.createdAt || b.timestamp) - new Date(a.createdAt || a.timestamp));
+                }
+
+                filteredComplaints = [...allComplaints];
+                document.getElementById('feedLoading').classList.add('hidden');
+                updateStatistics();
+                populateComplaintsFeed();
+                populateRecentActivity();
+                updateNotificationCount();
+            });
+        }
+
+        function updateStatistics() {
+            const total = allComplaints.length;
+            const pending = allComplaints.filter(c => c.status === 'Pending').length;
+            const inProgress = allComplaints.filter(c => c.status === 'In Progress').length;
+            const resolved = allComplaints.filter(c => c.status === 'Resolved').length;
+
+            document.getElementById('totalComplaints').textContent = total;
+            document.getElementById('pendingComplaints').textContent = pending;
+            document.getElementById('inProgressComplaints').textContent = inProgress;
+            document.getElementById('resolvedComplaints').textContent = resolved;
+        }
+
+        function populateComplaintsFeed() {
+            const feedContainer = document.getElementById('complaintsFeed');
+            
+            if (filteredComplaints.length === 0) {
+                feedContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>No complaints found</h3>
+                        <p>No complaints match your current filters.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            feedContainer.innerHTML = '';
+
+            filteredComplaints.forEach(complaint => {
+                const complaintElement = createComplaintElement(complaint);
+                feedContainer.appendChild(complaintElement);
+            });
+        }
+
+        function populateRecentActivity() {
+            const activityContainer = document.getElementById('recentActivity');
+            const recentComplaints = allComplaints.slice(0, 5);
+            
+            if (recentComplaints.length === 0) {
+                activityContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <p>No recent activity</p>
+                    </div>
+                `;
+                return;
+            }
+
+            activityContainer.innerHTML = '';
+
+            recentComplaints.forEach(complaint => {
+                const activityElement = createComplaintElement(complaint, true);
+                activityContainer.appendChild(activityElement);
+            });
+        }
+
+        function createComplaintElement(complaint, isCompact = false) {
+            const complaintDiv = document.createElement('div');
+            const statusClass = complaint.status.toLowerCase().replace(' ', '-');
+            complaintDiv.className = `complaint ${statusClass}`;
+
+            const timeAgo = getTimeAgo(new Date(complaint.createdAt || complaint.timestamp));
+            const shortId = complaint.id ? complaint.id.substring(0, 8) : 'N/A';
+            
+            let locationInfo = '';
+            if (complaint.latitude && complaint.longitude) {
+                locationInfo = `📍 ${parseFloat(complaint.latitude).toFixed(4)}, ${parseFloat(complaint.longitude).toFixed(4)}`;
+            }
+
+            complaintDiv.innerHTML = `
+                <div class="complaint-header">
+                    <div class="complaint-id">ID: ${shortId}</div>
+                    <span class="complaint-status status-${statusClass}">${complaint.status}</span>
+                </div>
+                <div class="complaint-time">${timeAgo}</div>
+                <div class="complaint-content">${complaint.description || 'No description provided'}</div>
+                <div class="complaint-meta">
+                    <span class="complaint-author">👤 ${complaint.name || 'Anonymous'}</span>
+                    <span class="meta-info">📂 ${complaint.category || 'General'}</span>
+                    ${locationInfo ? `<span class="location-info">${locationInfo}</span>` : ''}
+                </div>
+            `;
+
+            return complaintDiv;
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInMinutes = Math.floor((now - date) / (1000 * 60));
+
+            if (diffInMinutes < 1) return 'Just now';
+            if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) return `${diffInHours}h ago`;
+
+            const diffInDays = Math.floor(diffInHours / 24);
+            return `${diffInDays}d ago`;
+        }
+
+        function updateNotificationCount() {
+            const newComplaints = allComplaints.filter(complaint => {
+                const complaintTime = new Date(complaint.createdAt || complaint.timestamp);
+                const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+                return complaintTime > oneHourAgo;
+            }).length;
+
+            document.getElementById('notificationCount').textContent = newComplaints;
+            document.getElementById('newCount').textContent = `${newComplaints} New`;
+        }
+
+        window.filterComplaints = function() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const timeFilter = document.getElementById('timeFilter').value;
+
+            filteredComplaints = allComplaints.filter(complaint => {
+                let matchesStatus = !statusFilter || complaint.status === statusFilter;
+                let matchesCategory = !categoryFilter || complaint.category === categoryFilter;
+                let matchesTime = true;
+
+                if (timeFilter) {
+                    const complaintDate = new Date(complaint.createdAt || complaint.timestamp);
+                    const now = new Date();
+                    
+                    switch (timeFilter) {
+                        case 'today':
+                            matchesTime = complaintDate.toDateString() === now.toDateString();
+                            break;
+                        case 'week':
+                            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                            matchesTime = complaintDate >= weekAgo;
+                            break;
+                        case 'month':
+                            const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                            matchesTime = complaintDate >= monthAgo;
+                            break;
+                    }
+                }
+
+                return matchesStatus && matchesCategory && matchesTime;
+            });
+
+            populateComplaintsFeed();
+        };
+
+        window.refreshData = function() {
+            document.getElementById('feedLoading').classList.remove('hidden');
+            document.getElementById('complaintsFeed').innerHTML = '';
+
+            setTimeout(() => {
+                document.getElementById('feedLoading').classList.add('hidden');
+                populateComplaintsFeed();
+                populateRecentActivity();
+                updateStatistics();
+            }, 1000);
+        };
+
+        window.toggleNotifications = function() {
+            const newComplaints = allComplaints.filter(complaint => {
+                const complaintTime = new Date(complaint.createdAt || complaint.timestamp);
+                const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+                return complaintTime > oneHourAgo;
+            });
+
+            if (newComplaints.length > 0) {
+                alert(`${newComplaints.length} new complaints in the last hour:\n\n` + 
+                      newComplaints.slice(0, 3).map(c => `• ${c.description?.substring(0, 50)}...`).join('\n'));
+            } else {
+                alert('No new notifications');
+            }
+        };
+
+        window.logout = function() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'complaint.html';
+            }
+        };
+
+        // Initialize dashboard
+        initDashboard();
+    </script>
+</body>
+</html>
