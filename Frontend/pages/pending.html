@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resolved Complaints</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Pending Complaints</title>
+  <link rel="stylesheet" href="../css/styles.css" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -54,13 +54,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="admin-profile.html" class="nav-link">
-                            <span class="nav-icon">👤</span>
-                            Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="dashboard_final.html" class="nav-link">
+                        <a href="public-dashboard.html" class="nav-link">
                             <span class="nav-icon">🏠</span>
                             Public Dashboard
                         </a>
@@ -72,7 +66,7 @@
     <!-- Main Content -->
     <main class="main-content">
       <div class="header">
-        <h2>Resolved Complaints</h2>
+        <h2>Pending Complaints</h2>
         <div class="user-info">
           <div class="user-avatar">GA</div>
         </div>
@@ -93,19 +87,19 @@
         .then(res => res.json())
         .then(data => {
           const complaints = (data.complaints || []).filter(
-            c => (c.status || '').toLowerCase() === 'resolved'
+            c => ['pending', 'pending_review', 'under_review'].includes((c.status || '').toLowerCase())
           );
           if (!complaints.length) {
-            list.innerHTML = '<div class="loading">No resolved complaints.</div>';
+            list.innerHTML = '<div class="loading">No pending complaints.</div>';
             return;
           }
           list.innerHTML = '';
           complaints.forEach(c => {
             list.innerHTML += `
-              <div class="complaint-item resolved">
+              <div class="complaint-item pending">
                 <div class="complaint-header">
                   <span class="complaint-id">#${c._id}</span>
-                  <span class="complaint-status status-resolved">${c.status}</span>
+                  <span class="complaint-status status-pending">${c.status}</span>
                 </div>
                 <p class="complaint-content">${c.complaint_query || ''}</p>
                 <div class="complaint-meta">

@@ -8,27 +8,37 @@ from .ai_model import analyze_complaint
 
 @csrf_exempt
 def complaint_list(request):
-    """Handle GET requests to list all complaints and provide status counts"""
+    """Handle GET requests to list all complaints and provide status counts with pagination"""
     if request.method == 'GET':
         try:
-            complaints = list(complaints_collection.find())
-            # Convert ObjectId to string for JSON serialization
+            # Pagination parameters
+            page = int(request.GET.get('page', 1))
+            page_size = int(request.GET.get('page_size', 5))
+            skip = (page - 1) * page_size
+
+            total_complaints = complaints_collection.count_documents({})
+            # Sort by newest first (assuming you have a 'date' or '_id' field)
+            complaints_cursor = complaints_collection.find().sort([('_id', -1)]).skip(skip).limit(page_size)
+            complaints = list(complaints_cursor)
             for complaint in complaints:
                 complaint['_id'] = str(complaint['_id'])
 
-            # Count complaints by status (case-insensitive, support all variants)
-            total_complaints = len(complaints)
+            # Status counts (optional, can be removed if not needed)
             pending_review = sum(1 for c in complaints if str(c.get('status', '')).lower() in ['pending', 'pending_review', 'under_review'])
             resolved = sum(1 for c in complaints if str(c.get('status', '')).lower() in ['resolved'])
             in_progress = sum(1 for c in complaints if str(c.get('status', '')).lower() in ['in_progress'])
             rejected = sum(1 for c in complaints if str(c.get('status', '')).lower() in ['rejected'])
+
             return JsonResponse({
                 'total_complaints': total_complaints,
                 'pending_review': pending_review,
                 'resolved': resolved,
                 'in_progress': in_progress,
                 'rejected': rejected,
-                'complaints': complaints
+                'complaints': complaints,
+                'page': page,
+                'page_size': page_size,
+                'total_pages': (total_complaints + page_size - 1) // page_size
             })
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
@@ -49,6 +59,10 @@ def complaint_create(request):
             if not all(field in data for field in required_fields):
                 return JsonResponse({'error': 'Missing required fields'}, status=400)
 
+            # NEW: Check complaint description length
+            if len(data['complaint_query'].strip()) < 10:
+                return JsonResponse({'error': 'Please describe your complaint in more detail.'}, status=400)
+
             # AI inference for complaint analysis
             ai_result = analyze_complaint(data['complaint_query'])
             if ai_result is None:
@@ -56,6 +70,8 @@ def complaint_create(request):
             data['priority_score'] = ai_result.get('priority_score', 1)
             data['department'] = ai_result.get('department', 'General')
             data['recommended_officer'] = ai_result.get('recommended_officer', '')
+
+            # ...existing code...
             data['ai_analysis'] = ai_result.get('ai_analysis', {})
             data['status'] = 'pending_review'  # Default status
             

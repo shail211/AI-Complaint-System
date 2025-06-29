@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sikkim Complaint Portal - Admin Dashboard</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
     <style>
         /* Modal content styling for Swiss/International Typographic Style */
         #complaintModal .modal-content {
@@ -127,14 +127,9 @@
                             Analytics
                         </a>
                     </li>
+                    
                     <li class="nav-item">
-                        <a href="admin-profile.html" class="nav-link">
-                            <span class="nav-icon">👤</span>
-                            Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="dashboard_final.html" class="nav-link">
+                        <a href="/public-dashboard.html" class="nav-link">
                             <span class="nav-icon">🏠</span>
                             Public Dashboard
                         </a>
@@ -302,7 +297,7 @@
                 let statusClass = '';
                 if ((c.status || '').toLowerCase() === 'pending' || (c.status || '').toLowerCase() === 'pending_review' || (c.status || '').toLowerCase() === 'under_review') statusClass = 'status-pending';
                 else if ((c.status || '').toLowerCase() === 'in_progress' || (c.status || '').toLowerCase() === 'in progress') statusClass = 'status-progress';
-                else if ((c.status || '').toLowerCase() === 'resolved') statusClass = 'status-resolved';
+                else if ((c.status || '').toLowerCase() === 'resolved' ) statusClass = 'status-resolved';
                 else if ((c.status || '').toLowerCase() === 'rejected' || (c.status || '').toLowerCase() === 'rejected_complaint') statusClass = 'status-rejected';
                 div.className = `complaint-item ${statusClass}`;
                 div.innerHTML = `
@@ -360,7 +355,7 @@
             let statusClass = '';
             if ((c.status || '').toLowerCase() === 'pending' || (c.status || '').toLowerCase() === 'pending_review' || (c.status || '').toLowerCase() === 'under_review') statusClass = 'status-pending';
             else if ((c.status || '').toLowerCase() === 'in_progress' || (c.status || '').toLowerCase() === 'in progress') statusClass = 'status-progress';
-            else if ((c.status || '').toLowerCase() === 'resolved') statusClass = 'status-resolved';
+            else if ((c.status || '').toLowerCase() === 'resolved' ) statusClass = 'status-resolved';
             else if ((c.status || '').toLowerCase() === 'rejected' || (c.status || '').toLowerCase() === 'rejected_complaint') statusClass = 'status-rejected';
 
             // Prepare AI analysis details
