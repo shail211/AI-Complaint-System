@@ -25,7 +25,11 @@ SECRET_KEY = "django-insecure-pyy95(hyhum)ki^)b+3nww)^lti1t-c+bsyi@s73f%w^l)o89$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "aicomplaintapp.onrender.com",  # your Render domain
+    "localhost",
+    "127.0.0.1"
+]
 
 
 # Application definition
