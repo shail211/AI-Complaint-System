@@ -79,9 +79,72 @@
                 padding-left: 0.5rem;
             }
         }
+
+        /* Hide sidebar and show menu button on small screens */
+        @media (max-width: 900px) {
+          .sidebar { display: none !important; }
+          .mobile-menu { display: block; margin-bottom: 1rem; }
+        }
+        @media (min-width: 901px) {
+          .mobile-menu { display: none; }
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+          position: relative;
+          z-index: 1000;
+        }
+        .menu-toggle {
+          background: #1e40af;
+          color: #fff;
+          border: none;
+          padding: 0.7em 1.2em;
+          border-radius: 8px;
+          font-size: 1.2em;
+          cursor: pointer;
+          font-weight: 600;
+        }
+        .menu-dropdown {
+          display: none;
+          position: absolute;
+          left: 0;
+          top: 110%;
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+          min-width: 200px;
+          padding: 0.5em 0;
+        }
+        .menu-dropdown a {
+          display: block;
+          padding: 0.7em 1.2em;
+          color: #2f436e;
+          text-decoration: none;
+          font-weight: 500;
+          border-bottom: 1px solid #f1f5f9;
+        }
+        .menu-dropdown a:last-child { border-bottom: none; }
+        .menu-dropdown a:hover {
+          background: #f0f4fa;
+          color: #1e40af;
+        }
+        .menu-dropdown.show { display: block; }
     </style>
 </head>
 <body>
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+      <div class="menu-dropdown" id="menuDropdown">
+        <a href="admin-dashboard.html">📊 Dashboard</a>
+        <a href="All-Complaints.html">📋 All Complaints</a>
+        <a href="pending.html">⏳ Pending</a>
+        <a href="inprogress.html">🔄 In Progress</a>
+        <a href="resolved.html">✅ Resolved</a>
+        <a href="analytics.html">📈 Analytics</a>
+        <a href="/public-dashboard.html">🏠 Public Dashboard</a>
+      </div>
+    </div>
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="logo-section">
@@ -401,6 +464,26 @@
                 });
             });
         });
+
+        function toggleMenu() {
+          const menu = document.getElementById('menuDropdown');
+          if (menu.style.display === 'flex') {
+            menu.style.display = 'none';
+          } else {
+            menu.style.display = 'flex';
+          }
+        }
+        function toggleMenu() {
+            const menu = document.getElementById('menuDropdown');
+            menu.classList.toggle('show');
+            }
+            document.addEventListener('click', function(e) {
+            const menu = document.getElementById('menuDropdown');
+            const btn = document.querySelector('.menu-toggle');
+            if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+            });
     </script>
 </body>
 </html>
