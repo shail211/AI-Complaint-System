@@ -136,7 +136,7 @@
     }
 
     function fetchAndRenderCharts() {
-      fetch('http://localhost:8000/api/complaints/')
+      fetch(`${BASE_URL}/api/complaints/`)
         .then(res => res.json())
         .then(data => {
           const complaints = data.complaints || [];
