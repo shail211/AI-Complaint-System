@@ -232,7 +232,7 @@
 
         function fetchComplaints() {
             document.getElementById('complaintsLoading').style.display = '';
-            fetch('http://localhost:8000/api/complaints/')
+            fetch('https://aicomplaintapp.onrender.com/api/complaints/')
                 .then(res => res.json())
                 .then(data => {
                     allComplaints = data.complaints || [];
@@ -330,7 +330,7 @@
               drop.addEventListener('change', function() {
                 const complaintId = this.getAttribute('data-id');
                 const newStatus = this.value;
-                fetch(`http://localhost:8000/api/complaints/${complaintId}/update/`, {
+                fetch(`https://aicomplaintapp.onrender.com/api/complaints/${complaintId}/update/`, {
                   method: 'PATCH',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ status: newStatus })

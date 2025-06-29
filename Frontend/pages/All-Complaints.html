@@ -32,7 +32,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const grid = document.getElementById('complaints-grid');
             grid.innerHTML = '<div class="loading">Loading complaints...</div>';
-            fetch('http://localhost:8000/api/complaints/')
+            fetch('https://aicomplaintapp.onrender.com/api/complaints/')
                 .then(res => res.json())
                 .then(data => {
                     const complaints = data.complaints || [];
@@ -74,7 +74,7 @@
                       drop.addEventListener('change', function() {
                         const complaintId = this.getAttribute('data-id');
                         const newStatus = this.value;
-                        fetch(`http://localhost:8000/api/complaints/${complaintId}/update/`, {
+                        fetch(`https://aicomplaintapp.onrender.com/api/complaints/${complaintId}/update/`, {
                           method: 'PATCH',
                           headers: { 'Content-Type': 'application/json' },
                           body: JSON.stringify({ status: newStatus })

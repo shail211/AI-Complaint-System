@@ -83,7 +83,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const list = document.getElementById('complaints-list');
       list.innerHTML = '<div class="loading">Loading complaints...</div>';
-      fetch('http://localhost:8000/api/complaints/')
+      fetch('https://aicomplaintapp.onrender.com/api/complaints/')
         .then(res => res.json())
         .then(data => {
           const complaints = (data.complaints || []).filter(

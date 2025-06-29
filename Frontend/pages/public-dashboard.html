@@ -175,7 +175,7 @@
         // --- Fetch and update ---
         function fetchComplaints(page = 1) {
             document.getElementById('complaintsLoading').style.display = '';
-            fetch(`http://localhost:8000/api/complaints/?page=${page}&page_size=${pageSize}`)
+            fetch(`https://aicomplaintapp.onrender.com/api/complaints/?page=${page}&page_size=${pageSize}`)
                 .then(res => res.json())
                 .then(data => {
                     allComplaints = data.complaints || [];

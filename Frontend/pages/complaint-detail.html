@@ -26,13 +26,14 @@
         Loading...
     </div>
     <script>
+        const BASE_URL = 'https://aicomplaintapp.onrender.com';
         function getQueryParam(name) {
             const url = new URL(window.location.href);
             return url.searchParams.get(name);
         }
         const id = getQueryParam('id');
         const detailDiv = document.getElementById('complaint-detail');
-        fetch(`http://localhost:8000/api/complaints/${id}/`)
+        fetch(`${BASE_URL}/api/complaints/${id}/`)
             .then(res => res.json())
             .then(c => {
                 let statusClass = '';

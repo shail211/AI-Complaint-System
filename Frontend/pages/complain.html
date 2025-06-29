@@ -81,7 +81,7 @@
       const isAnonymous = document.getElementById('anonymous').checked;
       const name = isAnonymous ? "Anonymous" : document.getElementById('name').value.trim();
       const description = document.getElementById('description').value.trim();
-      fetch('http://localhost:8000/api/complaints/create/', {
+      fetch('https://aicomplaintapp.onrender.com/api/complaints/create/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
