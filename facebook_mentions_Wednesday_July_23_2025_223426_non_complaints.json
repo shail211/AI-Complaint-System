@@ -1,0 +1,465 @@
+{
+  "export_info": {
+    "timestamp": "2025-07-23T22:34:26.941082",
+    "page_id": "646197205254585",
+    "export_date": "Wednesday, July 23, 2025 at 10:34 PM IST",
+    "type": "non_complaints",
+    "total_posts": 10
+  },
+  "posts": [
+    {
+      "post_id": "1302466261595859_1303309568178195",
+      "username": "Facebook",
+      "message": "TagusComplaint video 2",
+      "cleaned_message": "video 2",
+      "from_name": "Unknown",
+      "created_time": "2025-07-22T16:22:44+0000",
+      "permalink_url": "https://www.facebook.com/1302466261595859/videos/1045368947759783",
+      "media": {
+        "images": [
+          {
+            "url": "https://scontent.fixb1-3.fna.fbcdn.net/v/t15.5256-10/523405206_764562566136163_6878286196649537630_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=282d23&_nc_ohc=AkpzadIea7MQ7kNvwEQWzuS&_nc_oc=AdkJ_JBqx43V2NZrr8Q6cfUaussGlEEKtQDt6F0VKYPizPzVtsLPDHB7BQaIBP4Qbyk&_nc_zt=23&_nc_ht=scontent.fixb1-3.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfSytP-o5JWDwprKgPPHHd_3qQN7A0ycYdgafhLGxo_5IQ&oe=6886D427",
+            "type": "post_image",
+            "title": "Full Picture"
+          },
+          {
+            "url": "https://scontent.fixb1-3.fna.fbcdn.net/v/t15.5256-10/523405206_764562566136163_6878286196649537630_n.jpg?stp=dst-jpg_s130x130_tt6&_nc_cat=110&ccb=1-7&_nc_sid=282d23&_nc_ohc=AkpzadIea7MQ7kNvwEQWzuS&_nc_oc=AdkJ_JBqx43V2NZrr8Q6cfUaussGlEEKtQDt6F0VKYPizPzVtsLPDHB7BQaIBP4Qbyk&_nc_zt=23&_nc_ht=scontent.fixb1-3.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfSEkXNX3q8N7Pjp8h_pLoaEBv94zq24W_8oCN95-F_SCA&oe=6886D427",
+            "type": "post_thumbnail",
+            "title": "Thumbnail"
+          },
+          {
+            "url": "https://scontent.fixb1-3.fna.fbcdn.net/v/t15.5256-10/523405206_764562566136163_6878286196649537630_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=a27664&_nc_ohc=AkpzadIea7MQ7kNvwEQWzuS&_nc_oc=AdkJ_JBqx43V2NZrr8Q6cfUaussGlEEKtQDt6F0VKYPizPzVtsLPDHB7BQaIBP4Qbyk&_nc_zt=23&_nc_ht=scontent.fixb1-3.fna&_nc_gid=dlHmpvsKI2qbRDz9CCjwdQ&oh=00_AfR8wW0kFarG2QY4M_ZaswbgHqhocjBIDf3TYi28cu75ug&oe=6886D427",
+            "type": "og_image",
+            "title": "Open Graph Image"
+          }
+        ],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 3,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 3
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "https://scontent.fixb1-3.fna.fbcdn.net/v/t15.5256-10/523405206_764562566136163_6878286196649537630_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=282d23&_nc_ohc=AkpzadIea7MQ7kNvwEQWzuS&_nc_oc=AdkJ_JBqx43V2NZrr8Q6cfUaussGlEEKtQDt6F0VKYPizPzVtsLPDHB7BQaIBP4Qbyk&_nc_zt=23&_nc_ht=scontent.fixb1-3.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfSytP-o5JWDwprKgPPHHd_3qQN7A0ycYdgafhLGxo_5IQ&oe=6886D427",
+        "picture": "https://scontent.fixb1-3.fna.fbcdn.net/v/t15.5256-10/523405206_764562566136163_6878286196649537630_n.jpg?stp=dst-jpg_s130x130_tt6&_nc_cat=110&ccb=1-7&_nc_sid=282d23&_nc_ohc=AkpzadIea7MQ7kNvwEQWzuS&_nc_oc=AdkJ_JBqx43V2NZrr8Q6cfUaussGlEEKtQDt6F0VKYPizPzVtsLPDHB7BQaIBP4Qbyk&_nc_zt=23&_nc_ht=scontent.fixb1-3.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfSEkXNX3q8N7Pjp8h_pLoaEBv94zq24W_8oCN95-F_SCA&oe=6886D427",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:33:36.957046",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "1302466261595859_1303306504845168",
+      "username": "Dawa Tshring",
+      "message": "TagusComplaint image",
+      "cleaned_message": "image",
+      "from_name": "Unknown",
+      "created_time": "2025-07-22T16:17:59+0000",
+      "permalink_url": "https://www.facebook.com/1302466261595859/posts/1303306504845168",
+      "media": {
+        "images": [
+          {
+            "url": "https://scontent.fixb1-1.fna.fbcdn.net/v/t39.30808-6/520275477_1303306414845177_3535840272640428630_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=u3APOZ9SSecQ7kNvwGdL4xW&_nc_oc=AdmphsMHJG0gHHjYog7jXN0_irdxpSekjxrNv0LwNF0EkD7gp4eccEm4Gz6BcvKyUgQ&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfRU9vYg5i_pytV8Y5Wv6579LfSgIng9o6IdX_8XpECW7g&oe=6886F35F",
+            "type": "post_image",
+            "title": "Full Picture"
+          },
+          {
+            "url": "https://scontent.fixb1-1.fna.fbcdn.net/v/t39.30808-6/520275477_1303306414845177_3535840272640428630_n.jpg?stp=dst-jpg_p130x130_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=u3APOZ9SSecQ7kNvwGdL4xW&_nc_oc=AdmphsMHJG0gHHjYog7jXN0_irdxpSekjxrNv0LwNF0EkD7gp4eccEm4Gz6BcvKyUgQ&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfSb7QWvtNWQtXKs3L8HaY4uvKZ4zZ_x-DGJXf1OUCccAw&oe=6886F35F",
+            "type": "post_thumbnail",
+            "title": "Thumbnail"
+          },
+          {
+            "url": "https://scontent.fixb1-1.fna.fbcdn.net/v/t39.30808-6/520275477_1303306414845177_3535840272640428630_n.jpg?stp=dst-jpg_tt6&cstp=mx736x1308&ctp=p600x600&_nc_cat=102&ccb=1-7&_nc_sid=b96d88&_nc_ohc=u3APOZ9SSecQ7kNvwGdL4xW&_nc_oc=AdmphsMHJG0gHHjYog7jXN0_irdxpSekjxrNv0LwNF0EkD7gp4eccEm4Gz6BcvKyUgQ&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&_nc_gid=ssnQYLY7yeBHgJ075KitFg&oh=00_AfTAMFAB79Qtl8tOW4HeaPMq2T9Ko2SDakZ8o31Qefr5rg&oe=6886F35F",
+            "type": "og_image",
+            "title": "Open Graph Image"
+          }
+        ],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 3,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 3
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "https://scontent.fixb1-1.fna.fbcdn.net/v/t39.30808-6/520275477_1303306414845177_3535840272640428630_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=u3APOZ9SSecQ7kNvwGdL4xW&_nc_oc=AdmphsMHJG0gHHjYog7jXN0_irdxpSekjxrNv0LwNF0EkD7gp4eccEm4Gz6BcvKyUgQ&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfRU9vYg5i_pytV8Y5Wv6579LfSgIng9o6IdX_8XpECW7g&oe=6886F35F",
+        "picture": "https://scontent.fixb1-1.fna.fbcdn.net/v/t39.30808-6/520275477_1303306414845177_3535840272640428630_n.jpg?stp=dst-jpg_p130x130_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=u3APOZ9SSecQ7kNvwGdL4xW&_nc_oc=AdmphsMHJG0gHHjYog7jXN0_irdxpSekjxrNv0LwNF0EkD7gp4eccEm4Gz6BcvKyUgQ&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfSb7QWvtNWQtXKs3L8HaY4uvKZ4zZ_x-DGJXf1OUCccAw&oe=6886F35F",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:33:42.595964",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "1302466261595859_1303243418184810",
+      "username": "Dawa Tshring",
+      "message": "TagusComplaint videos",
+      "cleaned_message": "videos",
+      "from_name": "Unknown",
+      "created_time": "2025-07-22T14:33:16+0000",
+      "permalink_url": "https://www.facebook.com/1302466261595859/videos/596987673205670",
+      "media": {
+        "images": [
+          {
+            "url": "https://scontent.fixb1-1.fna.fbcdn.net/v/t15.5256-10/522134885_23942842382003281_8425269006526826268_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=282d23&_nc_ohc=2cdxJwkiTV4Q7kNvwFGQtJM&_nc_oc=Adm0WnybtGIDbKDJmu6ndIuoxVYwT9uz83tsSFK4jD3AG9tNSvHKO2zBl121-zQy5dw&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfRhkqXsA7272dOWRIyNi4lZZUtM1qsxyyPWuqgk97R7hQ&oe=6886CE91",
+            "type": "post_image",
+            "title": "Full Picture"
+          },
+          {
+            "url": "https://scontent.fixb1-1.fna.fbcdn.net/v/t15.5256-10/522134885_23942842382003281_8425269006526826268_n.jpg?stp=dst-jpg_s130x130_tt6&_nc_cat=105&ccb=1-7&_nc_sid=282d23&_nc_ohc=2cdxJwkiTV4Q7kNvwFGQtJM&_nc_oc=Adm0WnybtGIDbKDJmu6ndIuoxVYwT9uz83tsSFK4jD3AG9tNSvHKO2zBl121-zQy5dw&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfRu5XqCHQj31Xnyw7dMv2yMJj0PNB9CzorsyXT8v45s3Q&oe=6886CE91",
+            "type": "post_thumbnail",
+            "title": "Thumbnail"
+          },
+          {
+            "url": "https://scontent.fixb1-1.fna.fbcdn.net/v/t15.5256-10/522134885_23942842382003281_8425269006526826268_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a27664&_nc_ohc=2cdxJwkiTV4Q7kNvwFGQtJM&_nc_oc=Adm0WnybtGIDbKDJmu6ndIuoxVYwT9uz83tsSFK4jD3AG9tNSvHKO2zBl121-zQy5dw&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&_nc_gid=U2JttLoghORh84Z59lkuBA&oh=00_AfR66eGUFul2UlNWvL0mRalOqDUHiPPLsXTbVSaUbNhq0Q&oe=6886CE91",
+            "type": "og_image",
+            "title": "Open Graph Image"
+          }
+        ],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 3,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 3
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "https://scontent.fixb1-1.fna.fbcdn.net/v/t15.5256-10/522134885_23942842382003281_8425269006526826268_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=282d23&_nc_ohc=2cdxJwkiTV4Q7kNvwFGQtJM&_nc_oc=Adm0WnybtGIDbKDJmu6ndIuoxVYwT9uz83tsSFK4jD3AG9tNSvHKO2zBl121-zQy5dw&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfRhkqXsA7272dOWRIyNi4lZZUtM1qsxyyPWuqgk97R7hQ&oe=6886CE91",
+        "picture": "https://scontent.fixb1-1.fna.fbcdn.net/v/t15.5256-10/522134885_23942842382003281_8425269006526826268_n.jpg?stp=dst-jpg_s130x130_tt6&_nc_cat=105&ccb=1-7&_nc_sid=282d23&_nc_ohc=2cdxJwkiTV4Q7kNvwFGQtJM&_nc_oc=Adm0WnybtGIDbKDJmu6ndIuoxVYwT9uz83tsSFK4jD3AG9tNSvHKO2zBl121-zQy5dw&_nc_zt=23&_nc_ht=scontent.fixb1-1.fna&edm=AGsF1lkEAAAA&_nc_gid=1mryoSeRVU_vpEoxEH1kZA&oh=00_AfRu5XqCHQj31Xnyw7dMv2yMJj0PNB9CzorsyXT8v45s3Q&oe=6886CE91",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:33:49.505431",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "1302466261595859_1302466121595873",
+      "username": "Dawa Tshring",
+      "message": "TagusComplaint hhhiiiimkxhdjsnnxa",
+      "cleaned_message": "hhhiiiimkxhdjsnnxa",
+      "from_name": "Unknown",
+      "created_time": "2025-07-21T14:52:50+0000",
+      "permalink_url": "https://www.facebook.com/1302466261595859/posts/1302466121595873",
+      "media": {
+        "images": [],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 0,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 0
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "",
+        "picture": "",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:33:54.287194",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "122121228746910686_122121449768910686",
+      "username": "Sikkim Darsan",
+      "message": "This is only the test..... TagusComplaint",
+      "cleaned_message": "This is only the test.....",
+      "from_name": "Unknown",
+      "created_time": "2025-07-21T06:48:16+0000",
+      "permalink_url": "https://www.facebook.com/122121228746910686/posts/122121449768910686",
+      "media": {
+        "images": [],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 0,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 0
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "",
+        "picture": "",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:33:58.886658",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "646197205254585_122104603994944440",
+      "username": "Sikkim Darsan",
+      "message": "where is my post bro TagusComplaint",
+      "cleaned_message": "where is my post bro",
+      "from_name": "Unknown",
+      "created_time": "2025-07-20T17:48:59+0000",
+      "permalink_url": "https://www.facebook.com/122102988524944440/posts/122104603994944440",
+      "media": {
+        "images": [],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 0,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 0
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "",
+        "picture": "",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:34:02.446918",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "122121228746910686_122121225986910686",
+      "username": "Sikkim Darsan",
+      "message": "TagusComplaint see this bro",
+      "cleaned_message": "see this bro",
+      "from_name": "Unknown",
+      "created_time": "2025-07-20T15:25:04+0000",
+      "permalink_url": "https://www.facebook.com/122121228746910686/posts/122121225986910686",
+      "media": {
+        "images": [],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 0,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 0
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "",
+        "picture": "",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:34:07.422506",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "646197205254585_122104521422944440",
+      "username": "TagusComplaint likes",
+      "message": "TagusComplaint likes",
+      "cleaned_message": "likes",
+      "from_name": "TagusComplaint",
+      "created_time": "2025-07-20T15:16:52+0000",
+      "permalink_url": "https://www.facebook.com/122102988524944440/posts/122104521422944440",
+      "media": {
+        "images": [],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 0,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 0
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "",
+        "picture": "",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:34:20.481562",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "646197205254585_122102992976944440",
+      "username": "TagusComplaint how",
+      "message": "TagusComplaint how",
+      "cleaned_message": "how",
+      "from_name": "TagusComplaint",
+      "created_time": "2025-07-19T08:11:45+0000",
+      "permalink_url": "https://www.facebook.com/122102988524944440/posts/122102992976944440",
+      "media": {
+        "images": [],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 0,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 0
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "",
+        "picture": "",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:34:23.765512",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    },
+    {
+      "post_id": "646197205254585_122102879846944440",
+      "username": "TagusComplaint hey",
+      "message": "TagusComplaint hey",
+      "cleaned_message": "hey",
+      "from_name": "TagusComplaint",
+      "created_time": "2025-07-19T07:07:27+0000",
+      "permalink_url": "https://www.facebook.com/122102988524944440/posts/122102879846944440",
+      "media": {
+        "images": [],
+        "videos": [],
+        "links": [],
+        "other_attachments": []
+      },
+      "media_count": {
+        "images": 0,
+        "videos": 0,
+        "links": 0,
+        "other_attachments": 0,
+        "total": 0
+      },
+      "complaint": {
+        "is_complaint": false,
+        "confidence_score": 0,
+        "processing_method": "enhanced_ai_pipeline"
+      },
+      "location_data": null,
+      "raw_data": {
+        "full_picture": "",
+        "picture": "",
+        "story": "",
+        "type": ""
+      },
+      "processing_metadata": {
+        "processed_at": "2025-07-23T22:34:26.941082",
+        "ai_version": "enhanced_pipeline_v2",
+        "confidence_score": 0
+      }
+    }
+  ],
+  "summary": {
+    "data_type": "non_complaints",
+    "total_posts": 10,
+    "total_complaints": 0,
+    "total_images": 9,
+    "total_videos": 0,
+    "total_links": 0,
+    "total_media_items": 9,
+    "posts_with_media": 3,
+    "posts_with_location": 0,
+    "usernames_extracted": 10,
+    "complaint_rate": "0.0%",
+    "high_confidence_posts": 0,
+    "priority_distribution": {},
+    "location_detection_rate": "0.0%"
+  }
+}

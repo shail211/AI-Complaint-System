@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Government Complaint Monitoring Dashboard</title>
+    <title>Enhanced Government Complaint Monitoring Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -33,7 +33,7 @@
         }
 
         .header-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -137,7 +137,7 @@
 
         /* Main Content */
         .main-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -152,6 +152,36 @@
         .page-subtitle {
             color: #64748b;
             margin-bottom: 2rem;
+        }
+
+        /* Data Source Tabs */
+        .data-source-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: white;
+            border-radius: 8px;
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #1e40af;
+            color: white;
+        }
+
+        .tab-btn:not(.active):hover {
+            background: #f1f5f9;
         }
 
         /* Stats Grid */
@@ -208,7 +238,7 @@
             font-size: 0.9rem;
         }
 
-        /* Controls */
+        /* Enhanced Controls */
         .controls-section {
             background: white;
             border: 1px solid #e2e8f0;
@@ -225,10 +255,10 @@
         }
 
         .filters {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
+            margin-bottom: 1rem;
         }
 
         .filter-group {
@@ -249,7 +279,6 @@
             border-radius: 6px;
             background: white;
             font-size: 0.9rem;
-            min-width: 150px;
         }
 
         .filter-select:focus {
@@ -258,10 +287,16 @@
             box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
         }
 
-        /* Content Grid */
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Enhanced Content Grid */
         .content-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1fr;
             gap: 2rem;
         }
 
@@ -310,43 +345,42 @@
 
         .card-content {
             padding: 1.5rem;
-            max-height: 600px;
+            max-height: 800px;
             overflow-y: auto;
         }
 
-        /* Complaints */
+        /* Enhanced Complaint Cards */
         .complaint {
             border: 1px solid #f1f5f9;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            transition: border-color 0.2s;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+            background: white;
         }
 
         .complaint:hover {
             border-color: #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        .complaint.pending {
-            border-left: 4px solid #d97706;
-            background: #fffbeb;
-        }
-
-        .complaint.resolved {
-            border-left: 4px solid #16a34a;
-            background: #f0fdf4;
-        }
-
-        .complaint.in-progress {
-            border-left: 4px solid #1e40af;
-            background: #eff6ff;
-        }
+        .complaint.priority-5 { border-left: 5px solid #ef4444; }
+        .complaint.priority-4 { border-left: 5px solid #f97316; }
+        .complaint.priority-3 { border-left: 5px solid #eab308; }
+        .complaint.priority-2 { border-left: 5px solid #3b82f6; }
+        .complaint.priority-1 { border-left: 5px solid #6b7280; }
 
         .complaint-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .complaint-meta-top {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
 
         .complaint-id {
@@ -355,65 +389,181 @@
             font-family: monospace;
         }
 
+        .complaint-datetime {
+            font-size: 0.85rem;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .complaint-priority {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-5 { background: #fee2e2; color: #dc2626; }
+        .priority-4 { background: #fed7aa; color: #ea580c; }
+        .priority-3 { background: #fef3c7; color: #d97706; }
+        .priority-2 { background: #dbeafe; color: #2563eb; }
+        .priority-1 { background: #f3f4f6; color: #6b7280; }
+
         .complaint-status {
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
         }
 
-        .status-pending { background: #fef3c7; color: #92400e; }
-        .status-resolved { background: #dcfce7; color: #166534; }
+        .status-pending-review { background: #fef3c7; color: #92400e; }
         .status-in-progress { background: #dbeafe; color: #1e40af; }
-
-        .complaint-time {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-bottom: 0.5rem;
-        }
+        .status-resolved { background: #dcfce7; color: #166534; }
 
         .complaint-content {
             color: #374151;
-            margin-bottom: 0.75rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
         }
 
-        .complaint-meta {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            align-items: center;
+        .complaint-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .meta-info {
+        .detail-section {
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 3px solid #e2e8f0;
+        }
+
+        .detail-title {
             font-size: 0.8rem;
+            font-weight: 600;
             color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
 
-        .complaint-author {
-            font-weight: 500;
-            color: #1e293b;
+        .detail-content {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .ai-analysis {
+            background: #f0f9ff;
+            border: 1px solid #e0f2fe;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-analysis-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .suggested-actions {
+            list-style: none;
+            margin: 0.5rem 0;
+        }
+
+        .suggested-actions li {
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .suggested-actions li:before {
+            content: "→";
+            position: absolute;
+            left: 0.75rem;
+            color: #3b82f6;
+            font-weight: bold;
         }
 
         .location-info {
-            font-size: 0.8rem;
-            color: #64748b;
-            font-style: italic;
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
         }
 
-        /* Loading State */
+        .location-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .complaint-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .action-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .action-link:hover {
+            background: #1e40af;
+            color: white;
+            border-color: #1e40af;
+        }
+
+        /* Loading and Empty States */
         .loading {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             color: #64748b;
         }
 
         .spinner {
-            width: 32px;
-            height: 32px;
-            border: 2px solid #f1f5f9;
-            border-top: 2px solid #1e40af;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f1f5f9;
+            border-top: 3px solid #1e40af;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
@@ -426,16 +576,16 @@
 
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem;
             color: #64748b;
         }
 
         .empty-state-icon {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
         }
 
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 768px) {
             body {
                 padding-top: 120px;
@@ -445,17 +595,16 @@
                 padding: 1rem;
             }
 
-            .content-grid {
+            .filters {
                 grid-template-columns: 1fr;
             }
 
-            .filters {
-                flex-direction: column;
-                align-items: stretch;
+            .complaint-details {
+                grid-template-columns: 1fr;
             }
 
-            .filter-group {
-                width: 100%;
+            .complaint-actions {
+                flex-direction: column;
             }
 
             .header-content {
@@ -477,8 +626,8 @@
             <div class="logo-section">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Seal_of_Sikkim_greyscale.png" alt="Sikkim Logo" class="logo" />
                 <div>
-                    <div class="header-title">Complaint Monitoring System</div>
-                    <div class="header-subtitle">Government of Sikkim</div>
+                    <div class="header-title">Enhanced Complaint Monitoring System</div>
+                    <div class="header-subtitle">Government of Sikkim - AI-Powered Social Media Analysis</div>
                 </div>
             </div>
             <div class="user-info">
@@ -487,7 +636,7 @@
                     <span class="notification-badge" id="notificationCount">0</span>
                 </button>
                 <div class="user-badge">
-                    <span id="currentUser">Administrator</span>
+                    <span id="currentUser">Government Administrator</span>
                 </div>
                 <button class="btn" onclick="logout()">Logout</button>
             </div>
@@ -496,8 +645,21 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="page-title">Dashboard Overview</div>
-        <div class="page-subtitle">Real-time monitoring of citizen complaints and feedback</div>
+        <div class="page-title">Enhanced Dashboard Overview</div>
+        <div class="page-subtitle">Comprehensive monitoring of citizen complaints with AI analysis and actionable insights</div>
+
+        <!-- Data Source Tabs -->
+        <div class="data-source-tabs">
+            <button class="tab-btn active" onclick="switchDataSource('mongodb')" id="mongoTab">
+                MongoDB Analysis (Rich Data)
+            </button>
+            <button class="tab-btn" onclick="switchDataSource('firebase')" id="firebaseTab">
+                Firebase Real-time (Legacy)
+            </button>
+            <button class="tab-btn" onclick="switchDataSource('combined')" id="combinedTab">
+                Combined View
+            </button>
+        </div>
 
         <!-- Statistics -->
         <div class="stats-grid">
@@ -510,10 +672,17 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
+                    <div class="stat-icon red">🔥</div>
+                </div>
+                <div class="stat-number" id="criticalComplaints">0</div>
+                <div class="stat-label">Critical Priority</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
                     <div class="stat-icon yellow">⏳</div>
                 </div>
                 <div class="stat-number" id="pendingComplaints">0</div>
-                <div class="stat-label">Pending Complaints</div>
+                <div class="stat-label">Pending Review</div>
             </div>
             <div class="stat-card">
                 <div class="stat-header">
@@ -527,31 +696,62 @@
                     <div class="stat-icon green">✅</div>
                 </div>
                 <div class="stat-number" id="resolvedComplaints">0</div>
-                <div class="stat-label">Resolved Complaints</div>
+                <div class="stat-label">Resolved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">📍</div>
+                </div>
+                <div class="stat-number" id="locationDetected">0</div>
+                <div class="stat-label">Location Identified</div>
             </div>
         </div>
 
-        <!-- Controls -->
+        <!-- Enhanced Controls -->
         <div class="controls-section">
-            <div class="controls-header">Filter and Controls</div>
+            <div class="controls-header">Advanced Filtering & Controls</div>
             <div class="filters">
                 <div class="filter-group">
                     <label class="filter-label">Status</label>
                     <select class="filter-select" id="statusFilter" onchange="filterComplaints()">
                         <option value="">All Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Resolved">Resolved</option>
+                        <option value="pending_review">Pending Review</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">Category</label>
-                    <select class="filter-select" id="categoryFilter" onchange="filterComplaints()">
-                        <option value="">All Categories</option>
-                        <option value="General">General</option>
-                        <option value="Infrastructure">Infrastructure</option>
-                        <option value="Public Services">Public Services</option>
-                        <option value="Environment">Environment</option>
+                    <label class="filter-label">Department</label>
+                    <select class="filter-select" id="departmentFilter" onchange="filterComplaints()">
+                        <option value="">All Departments</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Priority Level</label>
+                    <select class="filter-select" id="priorityFilter" onchange="filterComplaints()">
+                        <option value="">All Priorities</option>
+                        <option value="5">Critical (5)</option>
+                        <option value="4">High (4)</option>
+                        <option value="3">Medium (3)</option>
+                        <option value="2">Low (2)</option>
+                        <option value="1">Very Low (1)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Urgency Level</label>
+                    <select class="filter-select" id="urgencyFilter" onchange="filterComplaints()">
+                        <option value="">All Urgency</option>
+                        <option value="high">High Urgency</option>
+                        <option value="medium">Medium Urgency</option>
+                        <option value="low">Low Urgency</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Location Status</label>
+                    <select class="filter-select" id="locationFilter" onchange="filterComplaints()">
+                        <option value="">All Locations</option>
+                        <option value="identified">Location Identified</option>
+                        <option value="unidentified">Location Unknown</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -563,7 +763,11 @@
                         <option value="month">This Month</option>
                     </select>
                 </div>
-                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh Data</button>
+                <button class="btn" onclick="clearFilters()">🧹 Clear Filters</button>
+                <button class="btn" onclick="exportData()">📤 Export Data</button>
             </div>
         </div>
 
@@ -571,39 +775,33 @@
         <div class="content-grid">
             <div class="content-card">
                 <div class="card-header">
-                    <div class="card-title">Live Complaints Feed</div>
+                    <div class="card-title">Enhanced Complaints Feed</div>
                     <div class="live-indicator">
                         <div class="live-dot"></div>
-                        Live Monitoring
+                        <span id="dataSourceIndicator">MongoDB Connected</span>
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="loading" id="feedLoading">
                         <div class="spinner"></div>
-                        <p>Loading complaints...</p>
+                        <p>Loading enhanced complaint data...</p>
                     </div>
                     <div id="complaintsFeed"></div>
-                </div>
-            </div>
-
-            <div class="content-card">
-                <div class="card-header">
-                    <div class="card-title">Recent Activity</div>
-                    <div id="newCount">0 New</div>
-                </div>
-                <div class="card-content">
-                    <div id="recentActivity"></div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-        const firebaseConfig = {
+    <!-- Enhanced Dashboard Script -->
+    <script>
+        let allComplaints = [];
+        let filteredComplaints = [];
+        let currentDataSource = 'mongodb';
+        
+        // API endpoints
+        const MONGODB_API =  'mongodb+srv://shailprd69:6BxY9ZqpRIo337Tq@complaintdbcluster.3klel0m.mongodb.net/?retryWrites=true&w=majority&appName=ComplaintDBCluster'
+ //'http://localhost:8000/api'; // 
+        const FIREBASE_CONFIG = {
             apiKey: "AIzaSyCqNDsCCmQ32RqJduAytKhoOHlepw2WA1s",
             authDomain: "final-ai-project-2ec51.firebaseapp.com",
             projectId: "final-ai-project-2ec51",
@@ -611,53 +809,90 @@
             messagingSenderId: "788557714998",
             appId: "1:788557714998:web:60653b6d866a6903402a97"
         };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        let allComplaints = [];
-        let filteredComplaints = [];
-
-        function initDashboard() {
-            const complaintsRef = ref(database, 'complaints');
-            
-            onValue(complaintsRef, (snapshot) => {
-                const data = snapshot.val();
-                allComplaints = [];
-
-                if (data) {
-                    for (let id in data) {
-                        allComplaints.push({
-                            id,
-                            ...data[id]
-                        });
-                    }
-                    
-                    // Sort by creation time (newest first)
-                    allComplaints.sort((a, b) => new Date(b.createdAt || b.timestamp) - new Date(a.createdAt || a.timestamp));
+        
+        async function initDashboard() {
+            try {
+                document.getElementById('feedLoading').classList.remove('hidden');
+                
+                if (currentDataSource === 'mongodb' || currentDataSource === 'combined') {
+                    await loadMongoDBData();
                 }
-
+                
+                if (currentDataSource === 'firebase' || currentDataSource === 'combined') {
+                    await loadFirebaseData();
+                }
+                
                 filteredComplaints = [...allComplaints];
                 document.getElementById('feedLoading').classList.add('hidden');
+                
                 updateStatistics();
                 populateComplaintsFeed();
-                populateRecentActivity();
+                populateDepartmentFilter();
                 updateNotificationCount();
-            });
+                
+            } catch (error) {
+                console.error('Dashboard init error:', error);
+                showErrorMessage();
+            }
         }
-
+        
+        async function loadMongoDBData() {
+            try {
+                const response = await fetch(`${MONGODB_API}/complaints`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const mongoComplaints = await response.json();
+                console.log(`📊 Loaded ${mongoComplaints.length} MongoDB complaints`);
+                
+                allComplaints = mongoComplaints.map(complaint => ({
+                    ...complaint,
+                    source: 'mongodb'
+                }));
+                
+            } catch (error) {
+                console.error('MongoDB load error:', error);
+                throw error;
+            }
+        }
+        
+        async function loadFirebaseData() {
+            // Firebase integration would go here
+            console.log('Firebase data loading...');
+        }
+        
         function updateStatistics() {
             const total = allComplaints.length;
-            const pending = allComplaints.filter(c => c.status === 'Pending').length;
-            const inProgress = allComplaints.filter(c => c.status === 'In Progress').length;
-            const resolved = allComplaints.filter(c => c.status === 'Resolved').length;
-
+            const critical = allComplaints.filter(c => c.priority_score >= 5).length;
+            const pending = allComplaints.filter(c => c.status === 'Pending' || c.status === 'pending_review').length;
+            const inProgress = allComplaints.filter(c => c.status === 'In Progress' || c.status === 'in_progress').length;
+            const resolved = allComplaints.filter(c => c.status === 'Resolved' || c.status === 'resolved').length;
+            const locationDetected = allComplaints.filter(c => 
+                c.location_data && c.location_data.location && c.location_data.location !== 'area'
+            ).length;
+            
             document.getElementById('totalComplaints').textContent = total;
+            document.getElementById('criticalComplaints').textContent = critical;
             document.getElementById('pendingComplaints').textContent = pending;
             document.getElementById('inProgressComplaints').textContent = inProgress;
             document.getElementById('resolvedComplaints').textContent = resolved;
+            document.getElementById('locationDetected').textContent = locationDetected;
         }
-
+        
+        function populateDepartmentFilter() {
+            const departmentFilter = document.getElementById('departmentFilter');
+            const departments = [...new Set(allComplaints
+                .map(c => c.department)
+                .filter(d => d && d !== 'Unknown' && d !== 'General'))];
+            
+            departmentFilter.innerHTML = '<option value="">All Departments</option>';
+            departments.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                departmentFilter.appendChild(option);
+            });
+        }
+        
         function populateComplaintsFeed() {
             const feedContainer = document.getElementById('complaintsFeed');
             
@@ -671,162 +906,309 @@
                 `;
                 return;
             }
-
+            
             feedContainer.innerHTML = '';
-
             filteredComplaints.forEach(complaint => {
-                const complaintElement = createComplaintElement(complaint);
+                const complaintElement = createEnhancedComplaintElement(complaint);
                 feedContainer.appendChild(complaintElement);
             });
         }
-
-        function populateRecentActivity() {
-            const activityContainer = document.getElementById('recentActivity');
-            const recentComplaints = allComplaints.slice(0, 5);
-            
-            if (recentComplaints.length === 0) {
-                activityContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📋</div>
-                        <p>No recent activity</p>
-                    </div>
-                `;
-                return;
-            }
-
-            activityContainer.innerHTML = '';
-
-            recentComplaints.forEach(complaint => {
-                const activityElement = createComplaintElement(complaint, true);
-                activityContainer.appendChild(activityElement);
-            });
-        }
-
-        function createComplaintElement(complaint, isCompact = false) {
+        
+        function createEnhancedComplaintElement(complaint) {
             const complaintDiv = document.createElement('div');
-            const statusClass = complaint.status.toLowerCase().replace(' ', '-');
-            complaintDiv.className = `complaint ${statusClass}`;
-
-            const timeAgo = getTimeAgo(new Date(complaint.createdAt || complaint.timestamp));
-            const shortId = complaint.id ? complaint.id.substring(0, 8) : 'N/A';
+            complaintDiv.className = `complaint priority-${complaint.priority_score || 1}`;
             
-            let locationInfo = '';
-            if (complaint.latitude && complaint.longitude) {
-                locationInfo = `📍 ${parseFloat(complaint.latitude).toFixed(4)}, ${parseFloat(complaint.longitude).toFixed(4)}`;
+            // Format datetime using your preferred format
+            let formattedDateTime = complaint.createdAt || 'Unknown time';
+            if (complaint.timestamp) {
+                const dt = new Date(complaint.timestamp);
+                formattedDateTime = dt.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                    timeZone: 'Asia/Kolkata'
+                }) + ' IST';
             }
-
+            
+            // Priority badge
+            const priority = complaint.priority_score || 1;
+            const priorityLabels = ['', 'Very Low', 'Low', 'Medium', 'High', 'Critical'];
+            
+            // Status formatting
+            const statusClass = (complaint.status || 'pending').toLowerCase().replace(' ', '-').replace('_', '-');
+            
+            // Location information
+            let locationContent = 'Location not identified';
+            if (complaint.location_data && complaint.location_data.location) {
+                locationContent = `
+                    <strong>${complaint.location_data.location}</strong>
+                    <br>Type: ${complaint.location_data.type || 'Unknown'}
+                    <br>Confidence: ${complaint.location_data.confidence || 0}%
+                    <br>Method: ${complaint.location_data.method || 'AI Detection'}
+                `;
+            }
+            
+            // AI Analysis
+            let aiContent = 'No AI analysis available';
+            if (complaint.sentiment || complaint.urgency_level || complaint.summary) {
+                aiContent = `
+                    ${complaint.sentiment ? `<strong>Sentiment:</strong> ${complaint.sentiment}<br>` : ''}
+                    ${complaint.urgency_level ? `<strong>Urgency:</strong> ${complaint.urgency_level}<br>` : ''}
+                    ${complaint.summary ? `<strong>Summary:</strong> ${complaint.summary}<br>` : ''}
+                `;
+            }
+            
+            // Suggested actions
+            let suggestedActions = '';
+            if (complaint.suggested_actions && complaint.suggested_actions.length > 0) {
+                suggestedActions = `
+                    <ul class="suggested-actions">
+                        ${complaint.suggested_actions.map(action => `<li>${action}</li>`).join('')}
+                    </ul>
+                `;
+            }
+            
             complaintDiv.innerHTML = `
                 <div class="complaint-header">
-                    <div class="complaint-id">ID: ${shortId}</div>
-                    <span class="complaint-status status-${statusClass}">${complaint.status}</span>
+                    <div class="complaint-meta-top">
+                        <div class="complaint-id">ID: ${(complaint.id || '').substring(0, 8) || 'N/A'}</div>
+                        <div class="complaint-datetime">${formattedDateTime}</div>
+                    </div>
+                    <div class="complaint-priority">
+                        <span class="priority-badge priority-${priority}">Priority ${priority} - ${priorityLabels[priority]}</span>
+                        <span class="complaint-status status-${statusClass}">${complaint.status || 'Pending'}</span>
+                    </div>
                 </div>
-                <div class="complaint-time">${timeAgo}</div>
-                <div class="complaint-content">${complaint.description || 'No description provided'}</div>
-                <div class="complaint-meta">
-                    <span class="complaint-author">👤 ${complaint.name || 'Anonymous'}</span>
-                    <span class="meta-info">📂 ${complaint.category || 'General'}</span>
-                    ${locationInfo ? `<span class="location-info">${locationInfo}</span>` : ''}
+                
+                <div class="complaint-content">
+                    <strong>Complaint:</strong> ${complaint.description || complaint.complaint_query || 'No description available'}
+                </div>
+                
+                <div class="complaint-details">
+                    <div class="detail-section">
+                        <div class="detail-title">👤 Citizen Information</div>
+                        <div class="detail-content">
+                            <strong>Name:</strong> ${complaint.name || complaint.profile_name || 'Anonymous'}<br>
+                            <strong>Source:</strong> Facebook Post<br>
+                            <strong>Platform:</strong> Social Media Analysis
+                        </div>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <div class="detail-title">🏢 Department Assignment</div>
+                        <div class="detail-content">
+                            <strong>Department:</strong> ${complaint.department || 'Not assigned'}<br>
+                            <strong>Recommended Officer:</strong> ${complaint.recommended_officer || 'To be assigned'}
+                        </div>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <div class="detail-title">⏰ Timeline Information</div>
+                        <div class="detail-content">
+                            <strong>Reported:</strong> ${formattedDateTime}<br>
+                            <strong>Processing:</strong> ${complaint.processing_time || 'In queue'}<br>
+                            <strong>Last Update:</strong> ${complaint.last_updated || 'N/A'}
+                        </div>
+                    </div>
+                </div>
+                
+                ${complaint.location_data ? `
+                    <div class="location-info">
+                        <div class="location-title">📍 Location Analysis</div>
+                        ${locationContent}
+                    </div>
+                ` : ''}
+                
+                <div class="ai-analysis">
+                    <div class="ai-analysis-title">🤖 AI Analysis & Insights</div>
+                    ${aiContent}
+                    ${suggestedActions}
+                </div>
+                
+                <div class="complaint-actions">
+                    ${complaint.facebook_link ? `<a href="${complaint.facebook_link}" target="_blank" class="action-link">🔗 View Original Post</a>` : ''}
+                    ${complaint.image_link ? `<a href="${complaint.image_link}" target="_blank" class="action-link">🖼️ View Image</a>` : ''}
+                    ${complaint.video_link ? `<a href="${complaint.video_link}" target="_blank" class="action-link">🎥 View Video</a>` : ''}
+                    <button class="action-link" onclick="assignOfficer('${complaint.id}')">👨‍💼 Assign Officer</button>
+                    <button class="action-link" onclick="updateStatus('${complaint.id}')">🔄 Update Status</button>
+                    <button class="action-link" onclick="addNote('${complaint.id}')">📝 Add Note</button>
                 </div>
             `;
-
+            
             return complaintDiv;
         }
-
-        function getTimeAgo(date) {
-            const now = new Date();
-            const diffInMinutes = Math.floor((now - date) / (1000 * 60));
-
-            if (diffInMinutes < 1) return 'Just now';
-            if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-
-            const diffInHours = Math.floor(diffInMinutes / 60);
-            if (diffInHours < 24) return `${diffInHours}h ago`;
-
-            const diffInDays = Math.floor(diffInHours / 24);
-            return `${diffInDays}d ago`;
-        }
-
+        
         function updateNotificationCount() {
+            const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
             const newComplaints = allComplaints.filter(complaint => {
-                const complaintTime = new Date(complaint.createdAt || complaint.timestamp);
-                const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+                const complaintTime = new Date(complaint.timestamp);
                 return complaintTime > oneHourAgo;
             }).length;
-
+            
             document.getElementById('notificationCount').textContent = newComplaints;
-            document.getElementById('newCount').textContent = `${newComplaints} New`;
         }
-
+        
+        function showErrorMessage() {
+            document.getElementById('feedLoading').innerHTML = `
+                <div style="color: #ef4444; padding: 3rem; text-align: center;">
+                    ❌ Connection Error<br>
+                    <small>MongoDB: Make sure to run <strong>python dashboard_server.py</strong></small><br>
+                    <small>Server should be running on port 8000</small>
+                </div>
+            `;
+        }
+        
+        // Filter Functions
         window.filterComplaints = function() {
             const statusFilter = document.getElementById('statusFilter').value;
-            const categoryFilter = document.getElementById('categoryFilter').value;
+            const departmentFilter = document.getElementById('departmentFilter').value;
+            const priorityFilter = document.getElementById('priorityFilter').value;
+            const urgencyFilter = document.getElementById('urgencyFilter').value;
+            const locationFilter = document.getElementById('locationFilter').value;
             const timeFilter = document.getElementById('timeFilter').value;
-
+            
             filteredComplaints = allComplaints.filter(complaint => {
-                let matchesStatus = !statusFilter || complaint.status === statusFilter;
-                let matchesCategory = !categoryFilter || complaint.category === categoryFilter;
-                let matchesTime = true;
-
+                let matches = true;
+                
+                if (statusFilter && complaint.status !== statusFilter) matches = false;
+                if (departmentFilter && complaint.department !== departmentFilter) matches = false;
+                if (priorityFilter && complaint.priority_score != parseInt(priorityFilter)) matches = false;
+                if (urgencyFilter && complaint.urgency_level !== urgencyFilter) matches = false;
+                
+                if (locationFilter) {
+                    const hasLocation = complaint.location_data && complaint.location_data.location && complaint.location_data.location !== 'area';
+                    if (locationFilter === 'identified' && !hasLocation) matches = false;
+                    if (locationFilter === 'unidentified' && hasLocation) matches = false;
+                }
+                
                 if (timeFilter) {
-                    const complaintDate = new Date(complaint.createdAt || complaint.timestamp);
+                    const complaintDate = new Date(complaint.timestamp);
                     const now = new Date();
                     
                     switch (timeFilter) {
                         case 'today':
-                            matchesTime = complaintDate.toDateString() === now.toDateString();
+                            matches = matches && complaintDate.toDateString() === now.toDateString();
                             break;
                         case 'week':
                             const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                            matchesTime = complaintDate >= weekAgo;
+                            matches = matches && complaintDate >= weekAgo;
                             break;
                         case 'month':
                             const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-                            matchesTime = complaintDate >= monthAgo;
+                            matches = matches && complaintDate >= monthAgo;
                             break;
                     }
                 }
-
-                return matchesStatus && matchesCategory && matchesTime;
+                
+                return matches;
             });
-
+            
             populateComplaintsFeed();
         };
-
-        window.refreshData = function() {
-            document.getElementById('feedLoading').classList.remove('hidden');
-            document.getElementById('complaintsFeed').innerHTML = '';
-
-            setTimeout(() => {
-                document.getElementById('feedLoading').classList.add('hidden');
-                populateComplaintsFeed();
-                populateRecentActivity();
-                updateStatistics();
-            }, 1000);
+        
+        // Utility Functions
+        window.switchDataSource = function(source) {
+            currentDataSource = source;
+            
+            // Update tab styling
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(source + 'Tab').classList.add('active');
+            
+            // Update indicator
+            const indicators = {
+                'mongodb': 'MongoDB Connected',
+                'firebase': 'Firebase Connected',
+                'combined': 'Dual Source Active'
+            };
+            document.getElementById('dataSourceIndicator').textContent = indicators[source];
+            
+            // Reload data
+            initDashboard();
         };
-
+        
+        window.clearFilters = function() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('departmentFilter').value = '';
+            document.getElementById('priorityFilter').value = '';
+            document.getElementById('urgencyFilter').value = '';
+            document.getElementById('locationFilter').value = '';
+            document.getElementById('timeFilter').value = '';
+            filterComplaints();
+        };
+        
+        window.refreshData = async function() {
+            document.getElementById('feedLoading').classList.remove('hidden');
+            await initDashboard();
+        };
+        
+        window.exportData = function() {
+            const data = JSON.stringify(filteredComplaints, null, 2);
+            const blob = new Blob([data], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `complaints_export_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        };
+        
+        // Action Functions
+        window.assignOfficer = function(complaintId) {
+            const officer = prompt('Enter officer name to assign:');
+            if (officer) {
+                alert(`Assigned ${officer} to complaint ${complaintId}`);
+                // Implementation would update the database
+            }
+        };
+        
+        window.updateStatus = function(complaintId) {
+            const status = prompt('Enter new status (pending_review, in_progress, resolved):');
+            if (status) {
+                alert(`Updated complaint ${complaintId} status to: ${status}`);
+                // Implementation would update the database
+            }
+        };
+        
+        window.addNote = function(complaintId) {
+            const note = prompt('Enter note for this complaint:');
+            if (note) {
+                alert(`Added note to complaint ${complaintId}: ${note}`);
+                // Implementation would save the note
+            }
+        };
+        
         window.toggleNotifications = function() {
             const newComplaints = allComplaints.filter(complaint => {
-                const complaintTime = new Date(complaint.createdAt || complaint.timestamp);
+                const complaintTime = new Date(complaint.timestamp);
                 const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
                 return complaintTime > oneHourAgo;
             });
-
+            
             if (newComplaints.length > 0) {
                 alert(`${newComplaints.length} new complaints in the last hour:\n\n` + 
-                      newComplaints.slice(0, 3).map(c => `• ${c.description?.substring(0, 50)}...`).join('\n'));
+                      newComplaints.slice(0, 3).map(c => `• ${(c.description || c.complaint_query || '').substring(0, 50)}...`).join('\n'));
             } else {
                 alert('No new notifications');
             }
         };
-
+        
         window.logout = function() {
             if (confirm('Are you sure you want to logout?')) {
-                window.location.href = 'complaint.html';
+                window.location.href = 'login.html';
             }
         };
-
+        
         // Initialize dashboard
         initDashboard();
+        
+        // Auto-refresh every 10 minutes
+        setInterval(() => {
+            console.log('🔄 Auto-refreshing dashboard data...');
+            refreshData();
+        }, 10 * 60 * 1000);
     </script>
 </body>
 </html>
