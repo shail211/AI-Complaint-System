@@ -1,4 +1,4 @@
-# Beginner-Friendly Guide: Using Render for Deploying Backend and Frontend in the AI Complaint System
+# Guide: Using Render for Deploying Backend and Frontend in the AI Complaint System
 
 ## Introduction
 
